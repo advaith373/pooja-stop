@@ -1,613 +1,398 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>POOJA STOP — Catalog</title>
-  <meta name="description" content="POOJA STOP — curated pooja items and combos. Individual product pages, cart, and order demo." />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>POOJA STOP — Market</title>
+<meta name="description" content="POOJA STOP — curated pooja essentials. Swiggy-like layout, paper-template colors." />
+<style>
+  :root{
+    /* theme derived from your paper template */
+    --primary: #8a2b0a;      /* deep warm brown */
+    --accent:  #ffd27a;      /* warm gold */
+    --muted:   #6b2b0b;      /* darker text */
+    --card-bg: rgba(255,255,255,0.96);
+    --glass: rgba(255,255,255,0.06);
+    --shadow: 0 10px 30px rgba(0,0,0,0.18);
+    --max-width: 1200px;
+  }
 
-  <style>
-    :root{
-      --paper-width: 780px;
-      --paper-max-translate: 980px;
-      --accent:#8a2b0a;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;background: linear-gradient(#7a0010,#5a000c); color:#222; -webkit-font-smoothing:antialiased}
-    a{color:inherit}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(180deg,#f7ebe0,#f3ded1);
+    color: #222;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.35;
+  }
 
-    header{
-      position:fixed; inset:0 0 auto 0; z-index:1200; display:flex; justify-content:space-between; align-items:center;
-      padding:12px 20px; backdrop-filter: blur(6px);
-      background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.14));
-      color:#fff;
-    }
-    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
-    .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,#ffd27a,#f0a84a);display:flex;align-items:center;justify-content:center;color:#7a0010;font-weight:900}
-    nav ul{display:flex;gap:14px;list-style:none}
-    nav a{padding:8px 10px;border-radius:8px;text-decoration:none;color:#fff}
-    nav a:hover{background:rgba(255,255,255,0.06)}
+  /* Header similar layout to Swiggy */
+  header.site-head{
+    position:sticky; top:0; z-index:1200;
+    backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.55));
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .topbar{
+    max-width:var(--max-width);
+    margin:0 auto;
+    padding:14px 18px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px; cursor:pointer;
+  }
+  .brand .logo{
+    width:44px; height:44px; border-radius:8px;
+    background-image: url('/mnt/data/Web template.png');
+    background-size: cover;
+    background-position:center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:900; color:#7a0010;
+  }
+  .brand h1{ font-size:18px; color:var(--muted); letter-spacing:1px; margin:0 }
+  .search-area{
+    flex:1; display:flex; align-items:center; gap:12px; margin-left:8px;
+  }
+  .search-box{
+    flex:1; display:flex; align-items:center; gap:10px; padding:10px 12px;
+    border-radius:10px; background:#fff; box-shadow: var(--shadow);
+    border:1px solid rgba(0,0,0,0.04);
+  }
+  .search-box input{
+    border:0; outline:none; font-size:15px; width:100%;
+  }
+  .actions{ display:flex; gap:10px; align-items:center }
+  .action-btn{ padding:8px 10px; border-radius:8px; background:transparent; border:1px solid rgba(0,0,0,0.06); cursor:pointer}
 
-    main.stage{display:flex; justify-content:center; padding-top:78px; padding-bottom:120px}
-    .paper-wrapper{position:relative;width:calc(var(--paper-width) + 80px); max-width:94vw; margin:36px 0}
-    .paper-viewport{ width:var(--paper-width); height:86vh; max-height:96vh; overflow:hidden; border-radius:10px; position:relative; background:transparent; box-shadow:0 30px 80px rgba(0,0,0,0.6);}
-    .paper{ position:absolute; left:50%; transform:translateX(-50%) translateY(0); width:var(--paper-width); background-image: url('/mnt/data/Web template.png'); background-size: cover; background-repeat:no-repeat; top:0; height: calc(100vh + var(--paper-max-translate)); will-change: transform; transition: transform 0.08s linear;}
-    .rod{ position:absolute; left:50%; top:-36px; transform-origin:center center; transform:translateX(-50%) rotate(0deg); z-index:20; pointer-events:none; width:calc(var(--paper-width) + 120px); height:120px; }
-    .rod::before, .rod::after{ content:""; position:absolute; top:12px; width:48px; height:48px; border-radius:50%; background: linear-gradient(90deg,#5a350d,#b5833b); box-shadow:0 6px 18px rgba(0,0,0,0.5); }
-    .rod::before{ left:6px } .rod::after{ right:6px }
+  /* main layout */
+  .wrap{
+    max-width:var(--max-width);
+    margin:18px auto;
+    padding:0 18px;
+  }
 
-    .content{ position:relative; z-index:10; padding: 140px 44px 140px; min-height: calc(var(--paper-max-translate) + 700px); pointer-events:auto; }
+  /* categories (horizontal chips) */
+  .categories{
+    display:flex; gap:10px; overflow:auto; padding:12px 6px; margin-bottom:12px;
+  }
+  .chip{
+    flex:0 0 auto; padding:8px 12px; border-radius:22px; background:var(--card-bg);
+    border:1px solid rgba(0,0,0,0.04); cursor:pointer; font-weight:600; color:var(--muted);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  }
+  .chip.active{ background: linear-gradient(90deg,var(--accent), #f6c86a); color:#6b2b0b; box-shadow:0 10px 30px rgba(0,0,0,0.12) }
 
-    h1,h2,h3{ color:#522507; text-align:left; font-family: 'Georgia', serif; }
-    h1{ font-size:34px; text-align:center; margin-bottom:6px }
-    .lead{ text-align:center; color:#5e2a15; margin-bottom:20px }
+  /* main area with left column (list) and right cart */
+  .layout{
+    display:grid;
+    grid-template-columns: 1fr 340px;
+    gap:20px;
+    align-items:start;
+  }
 
-    /* layout */
-    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:12px; }
-    .card{ background:#fff; padding:12px; border-radius:12px; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.12); }
-    .card img{ width:120px; height:120px; object-fit:cover; border-radius:10px; }
-    .price{ color:var(--accent); font-weight:700; margin-top:8px; }
+  /* vendor / item cards grid */
+  .listing{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap:18px;
+  }
+  .vendor{
+    background:var(--card-bg); border-radius:12px; padding:12px; box-shadow:var(--shadow); border: 1px solid rgba(0,0,0,0.04);
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .vendor .thumb{
+    width:110px; height:90px; border-radius:10px; background:#eee; overflow:hidden; flex-shrink:0;
+  }
+  .vendor .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
+  .vendor .meta{ flex:1 }
+  .vendor h3{ margin:0 0 6px 0; font-size:16px; color:var(--muted) }
+  .vendor .tags{ font-size:13px; color:#6b6b6b; margin-bottom:6px }
+  .vendor .info{ display:flex; gap:8px; align-items:center; font-size:13px; color:#444; margin-top:6px }
+  .price-badge{ margin-left:auto; background: linear-gradient(180deg,var(--accent), #f0b85a); padding:6px 8px; border-radius:8px; font-weight:700; color:#6b2b0b; box-shadow: 0 6px 18px rgba(0,0,0,0.08) }
 
-    /* product detail */
-    .product-page{ display:flex; gap:18px; align-items:flex-start; margin-top:12px; }
-    .product-media{ width:340px; max-width:40%; }
-    .product-media img{ width:100%; border-radius:12px; box-shadow:0 6px 26px rgba(0,0,0,0.14) }
-    .product-info{ flex:1; background: rgba(255,255,255,0.96); padding:16px; border-radius:12px; box-shadow:0 6px 26px rgba(0,0,0,0.08); }
-    .product-info h2{ margin-bottom:8px; color:var(--accent) }
-    .qty{ display:flex; gap:8px; align-items:center; margin-top:12px; }
-    .qty button{ padding:8px 10px; border-radius:8px; border:1px solid #ddd; background:#fff; cursor:pointer }
-    .add-cart{ margin-top:14px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:8px; cursor:pointer }
+  .vendor .cta { margin-top:8px; display:flex; gap:8px; align-items:center }
+  .btn-add{ padding:8px 12px; border-radius:10px; border:none; background:var(--primary); color:#fff; cursor:pointer; }
 
-    /* cart */
-    .cart-bubble{ background:var(--accent); color:#fff; padding:6px 8px; border-radius:999px; font-weight:700; }
+  /* right sidebar cart */
+  .cart-panel{
+    position:sticky; top:92px; background:linear-gradient(180deg, #fff, #fff); border-radius:12px; padding:12px; box-shadow:var(--shadow);
+    border:1px solid rgba(0,0,0,0.04);
+    height:fit-content;
+  }
+  .cart-panel h4{ margin:0 0 8px 0; color:var(--muted) }
+  .cart-items{ display:flex; flex-direction:column; gap:8px; max-height:360px; overflow:auto; padding-right:6px }
+  .cart-row{ display:flex; gap:8px; align-items:center; justify-content:space-between; padding:6px; border-radius:8px; background:#faf7f4; border:1px solid rgba(0,0,0,0.03) }
+  .cart-row .left{ display:flex; gap:8px; align-items:center }
+  .cart-row img{ width:48px; height:48px; border-radius:6px; object-fit:cover }
+  .cart-summary{ margin-top:10px; font-weight:700; display:flex; justify-content:space-between; align-items:center }
+  .checkout{ margin-top:10px; padding:10px; border-radius:8px; background:linear-gradient(90deg,var(--accent), #f0b85a); color:#6b2b0b; font-weight:700; border:none; cursor:pointer; width:100% }
 
-    /* order modal */
-    .modal{ position:fixed; left:0; top:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.5); z-index:2000; }
-    .modal .box{ background:#fff; padding:18px; border-radius:12px; width:min(720px,94vw); max-height:86vh; overflow:auto; }
-    .item-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #eee }
+  /* mobile adjustments */
+  @media (max-width:980px){
+    .layout{ grid-template-columns: 1fr; }
+    .cart-panel{ position:fixed; right:10px; bottom:10px; width:92%; max-width:420px; z-index:1300; }
+  }
 
-    footer{ text-align:center; color:#fff; margin-top:18px; padding-bottom:40px }
+  /* small mobile */
+  @media (max-width:560px){
+    .topbar{ padding:10px }
+    .brand h1{ font-size:16px }
+    .vendor .thumb{ width:96px; height:76px }
+    .vendor h3{ font-size:15px }
+  }
 
-    @media (max-width:880px){
-      .product-page{ flex-direction:column; }
-      .product-media{ max-width:100%; width:100% }
-      :root{ --paper-width:640px }
-    }
-    @media (max-width:560px){
-      :root{ --paper-width:360px }
-      .content{ padding:100px 18px 120px }
-      header nav{ display:none }
-    }
-  </style>
+  /* subtle utilities */
+  .muted{ color:#6b6b6b; font-size:13px }
+  .small{ font-size:13px; color:#555 }
+  .center{ text-align:center }
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand"><div class="logo">PS</div> POOJA STOP</div>
-    <nav>
-      <ul>
-        <li><a href="#home" id="nav-home">Home</a></li>
-        <li><a href="#catalog" id="nav-catalog">Catalog</a></li>
-        <li><a href="#combos" id="nav-combos">Combos</a></li>
-        <li><a href="#contact" id="nav-contact">Contact</a></li>
-      </ul>
-    </nav>
 
-    <div style="display:flex;gap:12px;align-items:center">
-      <div style="color:#fff">Cart <span id="cart-count" class="cart-bubble">0</span></div>
-      <button id="open-cart" style="padding:8px 10px;border-radius:8px;border:none;background:rgba(255,255,255,0.08);color:#fff">View</button>
-    </div>
-  </header>
-
-  <main class="stage">
-    <div class="paper-wrapper">
-      <div class="paper-viewport">
-        <div class="rod" id="rod"></div>
-        <div class="paper" id="paper"></div>
-
-        <div class="content" id="content">
-          <div id="page-home">
-            <h1>POOJA STOP</h1>
-            <p class="lead">Curated pooja essentials & festival combos — authentic, fresh, delivered.</p>
-
-            <section id="catalog" class="section">
-              <h2>Catalog</h2>
-              <p style="color:#5e2a15">Click any item for details and to add to cart.</p>
-              <div id="product-grid" class="grid"></div>
-            </section>
-
-            <section id="combos" class="section">
-              <h2>Combos</h2>
-              <div id="combos-grid" style="margin-top:12px"></div>
-            </section>
-
-            <section id="about" class="section">
-              <h2>About</h2>
-              <p>Pooja Stop curates high-quality items for rituals and festivals. We source from trusted vendors and ensure freshness and authenticity.</p>
-            </section>
-
-            <section id="contact" class="section">
-              <h2>Contact</h2>
-              <p>Email: hello@poojastop.example</p>
-              <p>Phone: +91 98765 43210</p>
-            </section>
-
-            <footer>© <span id="year"></span> POOJA STOP</footer>
-          </div>
-
-          <!-- product detail placeholder -->
-          <div id="page-product" style="display:none">
-            <a href="#home" id="back-to-home" style="text-decoration:none;color:var(--accent);font-weight:700">← Back</a>
-            <div id="product-detail" style="margin-top:10px"></div>
-          </div>
-
-        </div> <!-- .content -->
-      </div> <!-- .paper-viewport -->
-    </div> <!-- .paper-wrapper -->
-  </main>
-
-  <!-- CART MODAL -->
-  <div id="cart-modal" style="display:none" class="modal" aria-hidden="true">
-    <div class="box">
-      <h3>Your Cart</h3>
-      <div id="cart-items" style="margin-top:10px"></div>
-
-      <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
-        <button id="close-cart" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff">Close</button>
-        <button id="checkout" style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff">Checkout (Demo)</button>
+<header class="site-head">
+  <div class="topbar">
+    <div class="brand" onclick="location.hash='home'">
+      <div class="logo" title="POOJA STOP">PS</div>
+      <div>
+        <h1>POOJA STOP</h1>
+        <div class="small muted">Pooja essentials & combos</div>
       </div>
-      <div id="order-msg" style="margin-top:8px;color:var(--accent)"></div>
     </div>
+
+    <div class="search-area" style="min-width:260px">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#b96b2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#b96b2b" stroke-width="2"/></svg>
+        <input id="search-input" placeholder="Search items, combos, or rituals (eg. diya, kumkum, festival)"/>
+        <select id="sort" style="border:0;background:transparent;outline:none">
+          <option value="popular">Popular</option>
+          <option value="price_low">Price: Low</option>
+          <option value="price_high">Price: High</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" id="saved">Saved</button>
+      <button class="action-btn" id="account">Sign in</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="categories" id="categories">
+    <!-- chips populated by JS -->
   </div>
 
-  <!-- CHECKOUT / ORDER SAVED modal -->
-  <div id="order-modal" style="display:none" class="modal" aria-hidden="true">
-    <div class="box">
-      <h3>Place Order (Demo)</h3>
-      <form id="order-form" style="display:flex;flex-direction:column;gap:10px">
-        <input name="name" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #ddd">
-        <input name="phone" placeholder="Phone / Email" required style="padding:10px;border-radius:8px;border:1px solid #ddd">
-        <textarea name="notes" placeholder="Delivery address / instructions" style="padding:10px;border-radius:8px;border:1px solid #ddd"></textarea>
-        <div style="display:flex;gap:8px;justify-content:flex-end">
-          <button type="button" id="cancel-order" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff">Cancel</button>
-          <button type="submit" style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff">Save Order (Local)</button>
-        </div>
-        <div id="order-result" style="color:var(--accent);margin-top:6px"></div>
-      </form>
+  <div class="layout">
+    <div>
+      <div class="listing" id="listing">
+        <!-- vendor cards populated by JS -->
+      </div>
     </div>
+
+    <aside class="cart-panel" id="cartPanel" aria-live="polite">
+      <h4>Your Cart <span id="cartCount" style="font-weight:700;color:var(--primary);">0</span></h4>
+      <div class="cart-items" id="cartItems">
+        <div class="center muted">No items yet — add from the list</div>
+      </div>
+      <div class="cart-summary">
+        <span>Total</span><span id="cartTotal">₹ 0</span>
+      </div>
+      <button class="checkout" id="checkoutBtn">Place Order (Demo)</button>
+    </aside>
   </div>
+</main>
 
 <script>
-/* =========================
-   Data: product catalog
-   ========================= */
-const PRODUCTS = [
-  {
-    id: 'p1', title: 'Brass Diya (Small)', price: 150,
-    images: ['https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop'],
-    description: 'Traditional brass diya for daily aarti. Hand-polished, durable, and ideal for oil or ghee wicks.',
-    category: 'Utensils'
-  },
-  {
-    id: 'p2', title: 'Agarbatti (Incense) Pack', price: 60,
-    images: ['https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop'],
-    description: 'Agarbatti pack (50 sticks) with a pleasant traditional fragrance for pooja and home ambiance.',
-    category: 'Fragrance'
-  },
-  {
-    id: 'p3', title: 'Kumkum & Haldi Set', price: 40,
-    images: ['https://images.unsplash.com/photo-1541661538399-7f4e9b0f5f5e?q=80&w=800&auto=format&fit=crop'],
-    description: 'Small sealed sachets of kumkum (vermilion) and haldi (turmeric) suitable for daily rituals.',
-    category: 'Essentials'
-  },
-  {
-    id: 'p4', title: 'Fresh Marigold Garland (Single)', price: 80,
-    images: ['https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop'],
-    description: 'Fresh marigold garland for deity decoration. Sold per garland. Replace with fresh ones for festivals.',
-    category: 'Flowers'
-  },
-  {
-    id: 'p5', title: 'Camphor (Kapoor) Box', price: 25,
-    images: ['https://images.unsplash.com/photo-1593005513054-c6a5a6f4a9e7?q=80&w=800&auto=format&fit=crop'],
-    description: 'Pure camphor blocks for aarti and rituals. Burns clean and gives a traditional fragrance.',
-    category: 'Fragrance'
-  },
-  {
-    id: 'p6', title: 'Sandalwood Paste (Chandan)', price: 120,
-    images: ['https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop'],
-    description: 'Natural sandalwood paste for tilak and ceremonial usage. Comes in a sealed jar.',
-    category: 'Essentials'
-  },
-  {
-    id: 'p7', title: 'Brass Pooja Thali (Medium)', price: 450,
-    images: ['https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop'],
-    description: 'Decorative brass thali for pooja. Perfect size for small family rituals and aartis.',
-    category: 'Utensils'
-  },
-  {
-    id: 'p8', title: 'Coconut (Pooja Coconut)', price: 60,
-    images: ['https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop'],
-    description: 'Fresh coconut used for puja offerings. Sold individually; we inspect for freshness before dispatch.',
-    category: 'Offerings'
-  },
-  {
-    id: 'p9', title: 'Bell (Ghanta) Small', price: 220,
-    images: ['https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop'],
-    description: 'Small bell for daily aarti with clear resonance. Hand-polished brass finish.',
-    category: 'Accessories'
-  },
-  {
-    id: 'p10', title: 'Pooja Box (Organizer)', price: 999,
-    images: ['https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop'],
-    description: 'Compact pooja box with compartments for kumkum, haldi, diya accessories and matches.',
-    category: 'Storage'
-  }
+/* ---------- Sample data (pooja-appropriate items/bundles) ---------- */
+const DATA = [
+  { id:'v1', name:'Brass Diya — Small', tags:['Diya','Brass'], eta:'10-15 min', rating:4.8, price:150, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
+  { id:'v2', name:'Agarbatti Pack (50)', tags:['Incense'], eta:'5-10 min', rating:4.6, price:60, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
+  { id:'v3', name:'Kumkum & Haldi Set', tags:['Essentials'], eta:'5-10 min', rating:4.7, price:40, img:'https://images.unsplash.com/photo-1541661538399-7f4e9b0f5f5e?q=80&w=800&auto=format&fit=crop' },
+  { id:'v4', name:'Fresh Marigold Garland', tags:['Flowers'], eta:'20-30 min', rating:4.5, price:80, img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
+  { id:'v5', name:'Camphor Box (Kapoor)', tags:['Camphor'], eta:'5-10 min', rating:4.6, price:25, img:'https://images.unsplash.com/photo-1593005513054-c6a5a6f4a9e7?q=80&w=800&auto=format&fit=crop' },
+  { id:'v6', name:'Sandalwood Paste (Chandan)', tags:['Chandan'], eta:'5-10 min', rating:4.9, price:120, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
+  { id:'v7', name:'Brass Thali (Medium)', tags:['Plate','Brass'], eta:'20-30 min', rating:4.4, price:450, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
+  { id:'v8', name:'Pooja Coconut (Fresh)', tags:['Offerings'], eta:'5-15 min', rating:4.3, price:60, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
+  { id:'v9', name:'Small Ghanta (Bell)', tags:['Accessories'], eta:'5-15 min', rating:4.6, price:220, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
+  { id:'v10', name:'Pooja Organizer Box', tags:['Storage'], eta:'3-7 days', rating:4.7, price:999, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
+  { id:'v11', name:'Festival Combo (Diya+Garland+Camphor)', tags:['Combo','Festival'], eta:'1 day', rating:4.8, price:699, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
 ];
 
-const COMBOS = [
-  { id: 'c1', title: 'Basic Pooja Combo', items: ['p1','p2','p3'], price: 250, description: 'Brass diya, agarbatti, kumkum & haldi set' },
-  { id: 'c2', title: 'Festival Combo', items: ['p1','p4','p5','p7'], price: 700, description: 'Large diya, garland, camphor, thali' },
-  { id: 'c3', title: 'Temple Ready Pack', items: ['p1','p2','p3','p4','p5','p7'], price: 1350, description: 'Everything needed for larger rituals' }
-];
+/* ---------- categories auto-derived ---------- */
+const categories = Array.from(new Set(DATA.flatMap(d=>d.tags))).sort();
+categories.unshift('All');
 
-/* ============================
-   UI: render product grid
-   ============================ */
-const gridEl = document.getElementById('product-grid');
-const combosGrid = document.getElementById('combos-grid');
-const cartCountEl = document.getElementById('cart-count');
+/* ---------- Render categories ---------- */
+const categoriesEl = document.getElementById('categories');
+categories.forEach(cat=>{
+  const chip = document.createElement('div');
+  chip.className = 'chip' + (cat==='All' ? ' active' : '');
+  chip.textContent = cat;
+  chip.dataset.cat = cat;
+  chip.addEventListener('click', ()=> {
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    filterAndRender();
+  });
+  categoriesEl.appendChild(chip);
+});
+
+/* ---------- Render listing ---------- */
+const listing = document.getElementById('listing');
+
+function createVendorCard(item){
+  const el = document.createElement('div');
+  el.className = 'vendor';
+  el.innerHTML = `
+    <div class="thumb"><img src="${item.img}" alt="${item.name}"></div>
+    <div class="meta">
+      <h3>${item.name}</h3>
+      <div class="tags">${item.tags.join(' • ')}</div>
+      <div class="info">
+        <div class="rating">⭐ ${item.rating}</div>
+        <div class="eta"> • ${item.eta}</div>
+        <div class="price-badge">${formatPrice(item.price)}</div>
+      </div>
+      <div class="cta">
+        <button class="btn-add" data-id="${item.id}">Add</button>
+        <button class="action-btn" data-view="${item.id}">View</button>
+      </div>
+    </div>
+  `;
+  return el;
+}
 
 function formatPrice(n){ return '₹ ' + n; }
 
-function renderCatalog(){
-  gridEl.innerHTML = '';
-  PRODUCTS.forEach(p=>{
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="${p.images[0]}" alt="${p.title}">
-      <div style="font-weight:700;margin-top:8px">${p.title}</div>
-      <div class="price">${formatPrice(p.price)}</div>
-      <div style="margin-top:8px">
-        <a href="#product-${p.id}" data-id="${p.id}" class="view-btn" style="text-decoration:none;padding:8px 10px;border-radius:8px;background:linear-gradient(90deg,#ffd27a,#f0a84a);color:#7a0010">View</a>
-      </div>
-    `;
-    gridEl.appendChild(card);
-  });
-}
-
-function renderCombos(){
-  combosGrid.innerHTML = '';
-  COMBOS.forEach(c=>{
-    const el = document.createElement('div');
-    el.className = 'card';
-    el.style.textAlign = 'left';
-    el.innerHTML = `<div style="font-weight:800">${c.title}</div>
-      <div style="margin:6px 0;color:#5e2a15">${c.description}</div>
-      <div style="font-weight:700;color:var(--accent)">${formatPrice(c.price)}</div>
-      <div style="margin-top:8px"><button data-id="${c.id}" class="combo-btn" style="padding:8px 10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer">Order Combo</button></div>`;
-    combosGrid.appendChild(el);
-  });
-}
-
-/* ============================
-   Routing: hash -> product detail
-   ============================ */
-const pageHome = document.getElementById('page-home');
-const pageProduct = document.getElementById('page-product');
-const productDetailHolder = document.getElementById('product-detail');
-
-function showHome(){
-  pageProduct.style.display = 'none';
-  pageHome.style.display = 'block';
-  document.getElementById('nav-catalog').classList.remove('active');
-}
-
-function showProduct(id){
-  const p = PRODUCTS.find(x => x.id === id);
-  if(!p){ showHome(); return; }
-
-  pageHome.style.display = 'none';
-  pageProduct.style.display = 'block';
-  productDetailHolder.innerHTML = '';
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'product-page';
-
-  const media = document.createElement('div');
-  media.className = 'product-media';
-  media.innerHTML = `<img src="${p.images[0]}" alt="${p.title}">`;
-
-  const info = document.createElement('div');
-  info.className = 'product-info';
-  info.innerHTML = `<h2>${p.title}</h2>
-    <div style="font-weight:700;color:var(--accent)">${formatPrice(p.price)}</div>
-    <p style="margin-top:8px">${p.description}</p>
-    <div class="qty">
-      <label>Qty:</label>
-      <button data-action="decrease">-</button>
-      <input type="number" min="1" value="1" id="qty-input" style="width:60px;padding:6px;border-radius:6px;border:1px solid #ddd">
-    </div>
-    <button class="add-cart" data-id="${p.id}">Add to Cart</button>
-    <div style="margin-top:8px"><a href="#combos" style="text-decoration:none;color:#6b2a14">View combos</a></div>`;
-
-  wrapper.appendChild(media);
-  wrapper.appendChild(info);
-  productDetailHolder.appendChild(wrapper);
-
-  // attach add to cart handler:
-  const addBtn = info.querySelector('.add-cart');
-  addBtn.addEventListener('click', ()=>{
-    const qty = Math.max(1, parseInt(document.getElementById('qty-input').value || '1'));
-    addToCart(p.id, qty);
-    alert(`${qty} × ${p.title} added to cart (demo).`);
-  });
-}
-
-/* ============================
-   Cart (localStorage)
-   ============================ */
-function getCart(){
-  try{
-    return JSON.parse(localStorage.getItem('pooja_cart') || '[]');
-  } catch(e){ return []; }
-}
-function saveCart(c){ localStorage.setItem('pooja_cart', JSON.stringify(c)); updateCartCount(); }
-function updateCartCount(){
-  const c = getCart();
-  const total = c.reduce((s,i)=>s+i.qty,0);
-  cartCountEl.textContent = total;
-}
-function addToCart(productId, qty=1){
-  const cart = getCart();
-  const existing = cart.find(i=>i.id===productId);
-  if(existing) existing.qty += qty;
-  else cart.push({ id: productId, qty });
-  saveCart(cart);
-}
-function removeFromCart(productId){
-  const cart = getCart().filter(i=>i.id!==productId);
-  saveCart(cart);
-}
-function clearCart(){ localStorage.removeItem('pooja_cart'); updateCartCount(); }
-
-/* ============================
-   Render cart modal
-   ============================ */
-const cartModal = document.getElementById('cart-modal');
-const cartItemsHolder = document.getElementById('cart-items');
-const openCartBtn = document.getElementById('open-cart');
-const closeCartBtn = document.getElementById('close-cart');
-const checkoutBtn = document.getElementById('checkout');
-
-function renderCartModal(){
-  const cart = getCart();
-  cartItemsHolder.innerHTML = '';
-  if(cart.length === 0){
-    cartItemsHolder.innerHTML = '<p>No items in cart.</p>';
+function renderListing(items){
+  listing.innerHTML = '';
+  if(!items.length){
+    listing.innerHTML = '<div class="center muted">No results found</div>';
     return;
   }
-  cart.forEach(entry=>{
-    const prod = PRODUCTS.find(p=>p.id === entry.id);
-    const row = document.createElement('div');
-    row.className = 'item-row';
-    row.innerHTML = `
-      <div style="display:flex;gap:12px;align-items:center">
-        <img src="${prod.images[0]}" style="width:64px;height:64px;border-radius:8px;object-fit:cover">
-        <div>
-          <div style="font-weight:700">${prod.title}</div>
-          <div style="color:#666">${formatPrice(prod.price)} × ${entry.qty}</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button data-remove="${entry.id}" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button>
-      </div>
-    `;
-    cartItemsHolder.appendChild(row);
-  });
-
-  // remove handlers
-  cartItemsHolder.querySelectorAll('[data-remove]').forEach(btn=>{
-    btn.addEventListener('click', (ev)=> {
-      const pid = ev.currentTarget.getAttribute('data-remove');
-      removeFromCart(pid);
-      renderCartModal();
-    });
-  });
+  items.forEach(it => listing.appendChild(createVendorCard(it)));
 }
 
-openCartBtn.addEventListener('click', ()=>{
-  renderCartModal();
-  cartModal.style.display = 'flex';
-});
-closeCartBtn.addEventListener('click', ()=> cartModal.style.display = 'none');
+/* ---------- Filter / Search ---------- */
+const searchInput = document.getElementById('search-input');
+const sortSelect = document.getElementById('sort');
 
-/* Checkout -> open order modal */
-checkoutBtn.addEventListener('click', ()=>{
-  cartModal.style.display = 'none';
-  document.getElementById('order-modal').style.display = 'flex';
-});
+function filterAndRender(){
+  const q = searchInput.value.trim().toLowerCase();
+  const activeChip = document.querySelector('.chip.active').dataset.cat;
+  let filtered = DATA.filter(d=>{
+    const inCat = activeChip === 'All' ? true : d.tags.includes(activeChip);
+    const inQ = q ? (d.name.toLowerCase().includes(q) || d.tags.join(' ').toLowerCase().includes(q)) : true;
+    return inCat && inQ;
+  });
 
-/* ============================
-   Order saving (demo): saves to localStorage "pooja_orders"
-   ============================ */
-const orderModal = document.getElementById('order-modal');
-const orderForm = document.getElementById('order-form');
-const cancelOrderBtn = document.getElementById('cancel-order');
-const orderResult = document.getElementById('order-result');
+  const sort = sortSelect.value;
+  if(sort === 'price_low') filtered.sort((a,b)=>a.price-b.price);
+  else if(sort === 'price_high') filtered.sort((a,b)=>b.price-a.price);
+  else filtered.sort((a,b)=>b.rating - a.rating);
 
-cancelOrderBtn.addEventListener('click', ()=> orderModal.style.display = 'none');
-
-orderForm.addEventListener('submit', (ev)=>{
-  ev.preventDefault();
-  const cart = getCart();
-  if(cart.length === 0){ orderResult.textContent = 'Cart is empty.'; return; }
-
-  const payload = {
-    ts: new Date().toISOString(),
-    name: orderForm.name.value,
-    contact: orderForm.phone.value,
-    notes: orderForm.notes.value,
-    items: cart
-  };
-
-  const orders = JSON.parse(localStorage.getItem('pooja_orders') || '[]');
-  orders.push(payload);
-  localStorage.setItem('pooja_orders', JSON.stringify(orders));
-
-  orderResult.textContent = 'Order saved locally (demo). Use a real backend to accept orders.';
-  clearCart();
-  setTimeout(()=> { orderModal.style.display = 'none'; orderResult.textContent = ''; }, 1400);
-});
-
-/* ============================
-   Combos ordering (demo)
-   ============================ */
-document.addEventListener('click', (ev)=>{
-  if(ev.target.matches('.combo-btn')){
-    const cid = ev.target.getAttribute('data-id');
-    const c = COMBOS.find(x=>x.id===cid);
-    if(!c) return;
-    // add combo as separate cart item (id=combo-<id>)
-    addToCartCombo(c.id, 1);
-    alert(`${c.title} added to cart (demo).`);
-  }
-});
-
-function addToCartCombo(comboId, qty=1){
-  // for demo, store combo entries as id 'combo-{id}'
-  const id = `combo-${comboId}`;
-  const cart = getCart();
-  const existing = cart.find(i=>i.id===id);
-  if(existing) existing.qty += qty;
-  else cart.push({ id, qty });
-  saveCart(cart);
+  renderListing(filtered);
 }
 
-/* When cart contains combo- entries, display them nicely */
-function renderCartModal(){
-  const cart = getCart();
-  cartItemsHolder.innerHTML = '';
+/* wire search and sort */
+searchInput.addEventListener('input', debounce(filterAndRender, 180));
+sortSelect.addEventListener('change', filterAndRender);
+
+/* initial render */
+renderListing(DATA);
+
+/* ---------- Cart logic (local, demo) ---------- */
+let cart = JSON.parse(localStorage.getItem('pooja_cart') || '[]');
+
+function saveCart(){ localStorage.setItem('pooja_cart', JSON.stringify(cart)); updateCartUI(); }
+function updateCartUI(){
+  const cartItemsEl = document.getElementById('cartItems');
+  cartItemsEl.innerHTML = '';
   if(cart.length === 0){
-    cartItemsHolder.innerHTML = '<p>No items in cart.</p>';
-    return;
-  }
-  cart.forEach(entry=>{
-    let row = document.createElement('div');
-    row.className = 'item-row';
-    if(entry.id.startsWith('combo-')){
-      const cid = entry.id.replace('combo-','');
-      const combo = COMBOS.find(c=>c.id===cid);
-      row.innerHTML = `<div style="font-weight:700">${combo.title}</div><div style="color:#666">${formatPrice(combo.price)} × ${entry.qty}</div>
-        <div style="margin-left:auto"><button data-remove="${entry.id}" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button></div>`;
-    } else {
-      const prod = PRODUCTS.find(p=>p.id === entry.id);
-      row.innerHTML = `
-      <div style="display:flex;gap:12px;align-items:center">
-        <img src="${prod.images[0]}" style="width:64px;height:64px;border-radius:8px;object-fit:cover">
-        <div>
-          <div style="font-weight:700">${prod.title}</div>
-          <div style="color:#666">${formatPrice(prod.price)} × ${entry.qty}</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button data-remove="${entry.id}" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button>
-      </div>
-      `;
-    }
-    cartItemsHolder.appendChild(row);
-  });
-
-  cartItemsHolder.querySelectorAll('[data-remove]').forEach(btn=>{
-    btn.addEventListener('click', (ev)=> {
-      const pid = ev.currentTarget.getAttribute('data-remove');
-      removeFromCart(pid);
-      renderCartModal();
-    });
-  });
-}
-
-/* ============================
-   Navigation / hashchange
-   ============================ */
-function handleHash(){
-  const h = location.hash || '#home';
-  if(h.startsWith('#product-')){
-    const id = h.replace('#product-','');
-    showProduct(id);
+    cartItemsEl.innerHTML = '<div class="center muted">No items yet — add from the list</div>';
   } else {
-    showHome();
-    // smooth scroll to anchors within content:
-    if(h && h !== '#home'){
-      const elId = h.replace('#','');
-      // find element inside content and scroll to it
-      setTimeout(()=> {
-        const el = document.getElementById(elId);
-        if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
-      }, 120);
-    } else {
-      window.scrollTo({top:0, behavior:'smooth'});
-    }
+    cart.forEach(entry=>{
+      const item = DATA.find(d=>d.id === entry.id);
+      const row = document.createElement('div');
+      row.className = 'cart-row';
+      row.innerHTML = `
+        <div class="left">
+          <img src="${item.img}" alt="${item.name}">
+          <div>
+            <div style="font-weight:700">${item.name}</div>
+            <div class="small muted">Qty: ${entry.qty}</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-weight:700">${formatPrice(item.price * entry.qty)}</div>
+          <div style="margin-top:6px"><button data-remove="${entry.id}" style="padding:6px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button></div>
+        </div>`;
+      cartItemsEl.appendChild(row);
+    });
+
+    cartItemsEl.querySelectorAll('[data-remove]').forEach(btn=>{
+      btn.addEventListener('click', (ev)=>{
+        const id = ev.currentTarget.getAttribute('data-remove');
+        cart = cart.filter(c=>c.id !== id);
+        saveCart();
+      });
+    });
   }
+
+  const total = cart.reduce((s,e)=> {
+    const item = DATA.find(d=>d.id===e.id);
+    return s + (item ? item.price * e.qty : 0);
+  }, 0);
+  document.getElementById('cartTotal').textContent = formatPrice(total);
+  document.getElementById('cartCount').textContent = cart.reduce((s,e)=>s+e.qty, 0);
 }
 
-window.addEventListener('hashchange', handleHash);
-window.addEventListener('load', ()=>{
-  renderCatalog();
-  renderCombos();
-  updateCartCount();
-  handleHash();
-  document.getElementById('year').textContent = new Date().getFullYear();
-});
-
-/* click-to product grid links (delegation) */
+/* add to cart */
 document.addEventListener('click', (ev)=>{
-  if(ev.target.matches('.view-btn')){
-    ev.preventDefault();
+  if(ev.target.matches('.btn-add')){
     const id = ev.target.getAttribute('data-id');
-    location.hash = `#product-${id}`;
+    const existing = cart.find(c=>c.id===id);
+    if(existing) existing.qty += 1; else cart.push({ id, qty: 1 });
+    saveCart();
+  }
+  if(ev.target.matches('[data-view]')){
+    const id = ev.target.getAttribute('data-view');
+    // open a small modal / alert with detail (simple)
+    const item = DATA.find(d=>d.id===id);
+    alert(item.name + "\\n\\n" + item.tags.join(', ') + "\\nPrice: " + formatPrice(item.price) + "\\nRating: " + item.rating + "\\nETA: " + item.eta);
   }
 });
 
-/* ============================
-   Paper roll effect (visual)
-   ============================ */
-(function(){
-  const paper = document.getElementById('paper');
-  const rod = document.getElementById('rod');
-  const maxTranslate = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--paper-max-translate')) || 980;
-  const maxRod = 12;
-  function updateOnScroll(){
-    const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollRatio = pageHeight > 0 ? (window.scrollY / pageHeight) : 0;
-    const translateY = Math.min(maxTranslate, Math.round(scrollRatio * maxTranslate));
-    const rodAngle = (scrollRatio * maxRod);
-    paper.style.transform = `translateX(-50%) translateY(${-translateY}px)`;
-    rod.style.transform = `translateX(-50%) rotate(${rodAngle}deg)`;
-  }
-  window.addEventListener('scroll', updateOnScroll, {passive:true});
-  window.addEventListener('resize', updateOnScroll);
-  updateOnScroll();
-})();
+/* checkout demo */
+document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+  if(cart.length === 0){ alert('Cart is empty'); return; }
+  const order = { ts: new Date().toISOString(), items: cart };
+  const orders = JSON.parse(localStorage.getItem('pooja_orders') || '[]');
+  orders.push(order);
+  localStorage.setItem('pooja_orders', JSON.stringify(orders));
+  cart = []; saveCart();
+  alert('Order saved locally (demo). You can wire this to a backend or Google Sheet.');
+});
 
-/* ============================
-   Utility: reveal product if direct URL with query param ?product=
-   ============================ */
-(function(){
-  const params = new URLSearchParams(location.search);
-  if(params.has('product')){
-    const id = params.get('product');
-    location.hash = `#product-${id}`;
-  }
-})();
+/* remove handlers from cart (delegated by updateCartUI) handled above */
 
-/* ============================
-   Small helpers: keyboard shortcuts for demo
-   ============================ */
+/* init cart UI */
+updateCartUI();
+
+/* ---------- utility ---------- */
+function debounce(fn, ms=200){
+  let t;
+  return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }
+}
+
+/* initial category selection highlight done above; allow keyboard "/" to focus search */
 document.addEventListener('keydown', (e)=>{
-  if(e.key === 'c' && (e.ctrlKey || e.metaKey)){
-    // Ctrl/Cmd + C opens cart (demo)
-    openCartBtn.click();
-  }
+  if(e.key === '/') { e.preventDefault(); searchInput.focus(); }
 });
 </script>
 
