@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>POOJA STOP — Market</title>
+<title>POOJA STOP — Market (Qty UI)</title>
 <meta name="description" content="POOJA STOP — curated pooja essentials. Modern shopping experience." />
 <style>
   :root{
@@ -13,8 +13,10 @@
     --card-bg: rgba(255,255,255,0.96);
     --shadow: 0 10px 30px rgba(0,0,0,0.18);
     --max-width: 1200px;
+    --pill-bg: #e9f2ff;
+    --pill-border: #1e90ff;
+    --pill-text: #0b56c8;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{
@@ -25,547 +27,74 @@
     line-height:1.35;
   }
 
-  /* Animations */
-  @keyframes fadeIn{
-    from{opacity:0;transform:translateY(10px)}
-    to{opacity:1;transform:translateY(0)}
-  }
-  @keyframes slideIn{
-    from{transform:translateX(-20px);opacity:0}
-    to{transform:translateX(0);opacity:1}
-  }
-
-  /* Header */
-  header.site-head{
-    position:sticky; top:0; z-index:1200;
-    backdrop-filter: blur(12px);
+  /* simplified styles (kept from previous design) */
+  header.site-head{ position:sticky; top:0; z-index:1200; backdrop-filter: blur(12px);
     background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
-  .topbar{
-    max-width:var(--max-width);
-    margin:0 auto;
-    padding:14px 18px;
-    display:flex; align-items:center; gap:16px;
-  }
-  .brand{
-    display:flex; align-items:center; gap:12px; cursor:pointer;
-    transition: transform 0.2s ease;
-  }
-  .brand:hover{transform:scale(1.02)}
-  .brand .logo{
-    width:44px; height:44px; border-radius:12px;
-    background-image: url('/mnt/data/Web template.png');
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 6px 18px rgba(138,43,10,0.3);
-    display:flex; align-items:center; justify-content:center;
-    font-weight:900; color:#fff; font-size:20px;
-  }
-  .brand h1{ font-size:18px; color:var(--muted); letter-spacing:1px; margin:0 }
-  .delivery-badge{
-    display:flex; align-items:center; gap:6px;
-    font-size:13px; font-weight:700; color:var(--primary);
-  }
-  
-  .search-area{
-    flex:1; display:flex; align-items:center; gap:12px; margin-left:8px;
-  }
-  .search-box{
-    flex:1; display:flex; align-items:center; gap:10px; padding:10px 14px;
-    border-radius:12px; background:#fff; box-shadow: var(--shadow);
-    border:1px solid rgba(0,0,0,0.04);
-    transition: all 0.3s ease;
-  }
-  .search-box:focus-within{
-    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
-    border-color: var(--accent);
-  }
-  .search-box input{
-    border:0; outline:none; font-size:15px; width:100%;
-  }
-  
-  .actions{ display:flex; gap:10px; align-items:center }
-  .action-btn{
-    padding:8px 12px; border-radius:10px; background:transparent;
-    border:1px solid rgba(0,0,0,0.08); cursor:pointer;
-    transition: all 0.2s ease; font-weight:500;
-  }
-  .action-btn:hover{
-    background:var(--primary);color:#fff;
-    transform:translateY(-2px);
-    box-shadow:0 6px 12px rgba(138,43,10,0.2);
-  }
+    border-bottom: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .topbar{ max-width:var(--max-width); margin:0 auto; padding:14px 18px; display:flex; align-items:center; gap:16px; }
+  .brand{ display:flex; align-items:center; gap:12px; cursor:pointer; }
+  .brand .logo{ width:44px; height:44px; border-radius:12px; background-image: url('/mnt/data/Web template.png'); background-size:cover; background-position:center; box-shadow:0 6px 18px rgba(138,43,10,0.3); display:flex; align-items:center; justify-content:center; font-weight:900; color:#fff; font-size:20px; }
+  .brand h1{ font-size:18px; color:var(--muted); margin:0 }
+  .search-area{ flex:1; display:flex; align-items:center; gap:12px; margin-left:8px; }
+  .search-box{ flex:1; display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; background:#fff; box-shadow: var(--shadow); border:1px solid rgba(0,0,0,0.04); }
+  .search-box input{ border:0; outline:none; font-size:15px; width:100%; }
 
-  .wrap{
-    max-width:var(--max-width);
-    margin:0 auto;
-    padding:0 18px;
-  }
+  .wrap{ max-width:var(--max-width); margin:0 auto; padding:0 18px; }
 
-  /* Section Headers */
-  .section-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:24px 0 16px 0;
-  }
-  .section-header h2{
-    font-size:24px;
-    color:var(--muted);
-    font-weight:700;
-  }
-  .see-all{
-    color:var(--primary);
-    font-weight:600;
-    cursor:pointer;
-    font-size:15px;
-    transition:all 0.2s ease;
-  }
-  .see-all:hover{
-    text-decoration:underline;
-    transform:translateX(3px);
-  }
+  .section-header{ display:flex; justify-content:space-between; align-items:center; margin:24px 0 16px 0; }
+  .section-header h2{ font-size:24px; color:var(--muted); font-weight:700; }
+  .see-all{ color:var(--primary); cursor:pointer; font-weight:600; }
 
-  /* Quick Picks - Horizontal Scroll */
-  .quick-picks{
-    display:flex;
-    gap:14px;
-    overflow-x:auto;
-    padding:12px 0 20px 0;
-    scroll-snap-type: x mandatory;
-    animation: fadeIn 0.4s ease;
-  }
-  .quick-picks::-webkit-scrollbar{height:8px}
-  .quick-picks::-webkit-scrollbar-track{background:rgba(0,0,0,0.03);border-radius:10px}
-  .quick-picks::-webkit-scrollbar-thumb{background:rgba(138,43,10,0.3);border-radius:10px}
-  
-  .quick-item{
-    flex:0 0 160px;
-    background:#fff;
-    border-radius:12px;
-    padding:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    border:1px solid rgba(0,0,0,0.04);
-    scroll-snap-align:start;
-    transition:all 0.3s ease;
-    cursor:pointer;
-    position:relative;
-  }
-  .quick-item:hover{
-    transform:translateY(-4px);
-    box-shadow:0 12px 24px rgba(0,0,0,0.12);
-  }
-  .quick-item .discount-badge{
+  .quick-picks{ display:flex; gap:14px; overflow-x:auto; padding:12px 0 20px 0; scroll-snap-type:x mandatory; }
+  .quick-item{ flex:0 0 160px; background:#fff; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); border:1px solid rgba(0,0,0,0.04); scroll-snap-align:start; position:relative; }
+  .quick-item img{ width:100%; height:120px; object-fit:cover; border-radius:8px; margin-bottom:10px; }
+  .quick-item h3{ font-size:14px; font-weight:600; margin-bottom:4px; color:#222; line-height:1.3; }
+  .quick-item .price{ font-weight:700; color:#222 }
+  /* NEW: quantity pill (floating) */
+  .qty-pill{
     position:absolute;
     top:8px;
-    left:8px;
-    background:#16a34a;
-    color:#fff;
-    padding:4px 8px;
-    border-radius:6px;
-    font-size:11px;
-    font-weight:700;
-  }
-  .quick-item img{
-    width:100%;
-    height:120px;
-    object-fit:cover;
-    border-radius:8px;
-    margin-bottom:10px;
-  }
-  .quick-item .duration{
-    font-size:11px;
-    color:#666;
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  .quick-item h3{
-    font-size:14px;
-    font-weight:600;
-    margin-bottom:4px;
-    color:#222;
-    line-height:1.3;
-  }
-  .quick-item .size{
-    font-size:12px;
-    color:#666;
-    margin-bottom:8px;
-  }
-  .quick-item .price-row{
+    right:8px;
     display:flex;
     align-items:center;
-    gap:6px;
-    margin-bottom:10px;
-  }
-  .quick-item .price{
-    font-size:16px;
+    gap:8px;
+    background:var(--pill-bg);
+    border:2px solid var(--pill-border);
+    color:var(--pill-text);
+    padding:6px 8px;
+    border-radius:10px;
     font-weight:700;
-    color:#222;
-  }
-  .quick-item .old-price{
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    z-index:10;
     font-size:13px;
-    color:#999;
-    text-decoration:line-through;
   }
-  .quick-item .add-btn{
-    width:32px;
-    height:32px;
-    border-radius:8px;
-    border:2px solid var(--primary);
-    background:#fff;
-    color:var(--primary);
-    font-size:20px;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:absolute;
-    bottom:12px;
-    right:12px;
-    transition:all 0.2s ease;
-  }
-  .quick-item .add-btn:hover{
-    background:var(--primary);
-    color:#fff;
-  }
+  .qty-pill button{ background:transparent; border:0; color:var(--pill-text); font-weight:800; width:26px; height:26px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+  .qty-pill .count{ min-width:26px; text-align:center; display:inline-block; padding:0 6px; background:#fff; border-radius:6px; color:#1b3a80; font-weight:800; }
 
-  /* Spotlight Categories */
-  .spotlight{
-    margin:30px 0;
-  }
-  .spotlight-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-    gap:14px;
-    padding:12px 0;
-  }
-  .spotlight-card{
-    background:#fff;
-    border-radius:12px;
-    padding:16px 12px;
-    text-align:center;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    border:1px solid rgba(0,0,0,0.04);
-    cursor:pointer;
-    transition:all 0.3s ease;
-    position:relative;
-    overflow:hidden;
-  }
-  .spotlight-card::before{
-    content:'';
-    position:absolute;
-    top:0;left:0;right:0;
-    height:4px;
-    background:linear-gradient(90deg, var(--accent), #f6c86a);
-    transform:scaleX(0);
-    transition:transform 0.3s ease;
-  }
-  .spotlight-card:hover::before{
-    transform:scaleX(1);
-  }
-  .spotlight-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 12px 24px rgba(0,0,0,0.12);
-  }
-  .spotlight-card .badge{
-    display:inline-block;
-    font-size:10px;
-    font-weight:700;
-    padding:4px 8px;
-    border-radius:6px;
-    margin-bottom:10px;
-    text-transform:uppercase;
-  }
-  .spotlight-card .badge.clearance{
-    background:#fef3c7;
-    color:#92400e;
-  }
-  .spotlight-card .badge.featured{
-    background:#dbeafe;
-    color:#1e40af;
-  }
-  .spotlight-card .badge.focus{
-    background:#f3e8ff;
-    color:#6b21a8;
-  }
-  .spotlight-card img{
-    width:100%;
-    height:100px;
-    object-fit:cover;
-    border-radius:8px;
-    margin-bottom:10px;
-  }
-  .spotlight-card h3{
-    font-size:14px;
-    font-weight:700;
-    color:var(--muted);
-    margin-bottom:4px;
-  }
-  .spotlight-card p{
-    font-size:12px;
-    color:#666;
-  }
+  /* browse grid */
+  .listing{ display:grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap:16px; }
+  .product-card{ background:#fff; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); border:1px solid rgba(0,0,0,0.04); position:relative; overflow:visible; }
+  .product-card img{ width:100%; height:160px; object-fit:cover; border-radius:10px; margin-bottom:10px; }
+  .product-card h3{ font-size:15px; font-weight:600; margin-bottom:4px; color:#222; }
+  .product-card .bottom{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+  .product-card .price{ font-weight:700; color:#222; }
+  /* place qty pill for product cards (top-right over image) */
+  .product-card .qty-pill{ top:10px; right:10px; }
 
-  /* Browse All Section */
-  .browse-all{
-    margin:40px 0 30px 0;
-  }
-  .listing{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-    gap:16px;
-  }
-  .product-card{
-    background:#fff;
-    border-radius:12px;
-    padding:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    border:1px solid rgba(0,0,0,0.04);
-    transition:all 0.3s ease;
-    cursor:pointer;
-    position:relative;
-  }
-  .product-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 12px 24px rgba(0,0,0,0.12);
-  }
-  .product-card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
-    border-radius:10px;
-    margin-bottom:10px;
-  }
-  .product-card .eta{
-    font-size:11px;
-    color:#666;
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  .product-card h3{
-    font-size:15px;
-    font-weight:600;
-    margin-bottom:4px;
-    color:#222;
-    line-height:1.3;
-  }
-  .product-card .tags{
-    font-size:11px;
-    color:#999;
-    margin-bottom:8px;
-  }
-  .product-card .bottom{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:10px;
-  }
-  .product-card .price{
-    font-size:17px;
-    font-weight:700;
-    color:#222;
-  }
-  .product-card .rating{
-    font-size:12px;
-    font-weight:600;
-  }
-  .product-card .add-btn{
-    width:36px;
-    height:36px;
-    border-radius:8px;
-    border:2px solid var(--primary);
-    background:#fff;
-    color:var(--primary);
-    font-size:22px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all 0.2s ease;
-  }
-  .product-card .add-btn:hover{
-    background:var(--primary);
-    color:#fff;
-  }
+  /* floating cart */
+  .cart-float{ position:fixed; bottom:20px; right:20px; background:var(--primary); color:#fff; padding:14px 20px; border-radius:50px; box-shadow:0 12px 30px rgba(138,43,10,0.3); cursor:pointer; display:flex; align-items:center; gap:10px; z-index:1100; }
+  .cart-float .count{ background:rgba(255,255,255,0.3); padding:4px 10px; border-radius:20px; font-size:14px; }
 
-  /* Fixed Cart Button */
-  .cart-float{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:var(--primary);
-    color:#fff;
-    padding:14px 24px;
-    border-radius:50px;
-    box-shadow:0 12px 30px rgba(138,43,10,0.3);
-    cursor:pointer;
-    font-weight:700;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    z-index:1100;
-    transition:all 0.3s ease;
-  }
-  .cart-float:hover{
-    transform:translateY(-3px);
-    box-shadow:0 16px 40px rgba(138,43,10,0.4);
-  }
-  .cart-float .count{
-    background:rgba(255,255,255,0.3);
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:14px;
-  }
+  /* modal */
+  .modal{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center; }
+  .modal.show{ display:flex; }
+  .modal-content{ background:#fff; border-radius:12px; padding:18px; width:92%; max-width:560px; }
 
-  /* Modal */
-  .modal{
-    display:none;
-    position:fixed;
-    top:0;left:0;right:0;bottom:0;
-    background:rgba(0,0,0,0.6);
-    z-index:2000;
-    align-items:center;
-    justify-content:center;
-    backdrop-filter:blur(4px);
-  }
-  .modal.show{display:flex}
-  .modal-content{
-    background:#fff;
-    border-radius:16px;
-    padding:24px;
-    max-width:500px;
-    width:90%;
-    max-height:80vh;
-    overflow:auto;
-    box-shadow:0 20px 60px rgba(0,0,0,0.3);
-  }
-  .modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-  }
-  .modal-header h3{
-    font-size:22px;
-    color:var(--muted);
-  }
-  .close-btn{
-    width:32px;
-    height:32px;
-    border-radius:8px;
-    border:none;
-    background:#f5f5f5;
-    cursor:pointer;
-    font-size:20px;
-    transition:all 0.2s ease;
-  }
-  .close-btn:hover{
-    background:#e5e5e5;
-  }
-  .cart-items{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-bottom:20px;
-  }
-  .cart-row{
-    display:flex;
-    gap:12px;
-    padding:12px;
-    border-radius:10px;
-    background:#faf7f4;
-    border:1px solid rgba(0,0,0,0.05);
-  }
-  .cart-row img{
-    width:70px;
-    height:70px;
-    border-radius:8px;
-    object-fit:cover;
-  }
-  .cart-row-info{
-    flex:1;
-  }
-  .cart-row h4{
-    font-size:15px;
-    margin-bottom:4px;
-  }
-  .cart-row .qty-controls{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-top:8px;
-  }
-  .qty-btn{
-    width:28px;
-    height:28px;
-    border-radius:6px;
-    border:1px solid #ddd;
-    background:#fff;
-    cursor:pointer;
-    font-weight:700;
-    transition:all 0.2s ease;
-  }
-  .qty-btn:hover{
-    background:var(--primary);
-    color:#fff;
-    border-color:var(--primary);
-  }
-  .cart-total{
-    padding:20px 0;
-    border-top:2px solid rgba(0,0,0,0.06);
-    display:flex;
-    justify-content:space-between;
-    font-size:20px;
-    font-weight:700;
-  }
-  .checkout-btn{
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:none;
-    background:linear-gradient(90deg,var(--accent), #f0b85a);
-    color:#6b2b0b;
-    font-weight:700;
-    font-size:16px;
-    cursor:pointer;
-    transition:all 0.3s ease;
-  }
-  .checkout-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(255,210,122,0.4);
-  }
-
-  /* Toast */
-  .toast{
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%) translateY(100px);
-    background:var(--primary);
-    color:#fff;
-    padding:12px 24px;
-    border-radius:12px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.2);
-    z-index:2000;
-    font-weight:600;
-    opacity:0;
-    transition:all 0.3s ease;
-  }
-  .toast.show{
-    transform:translateX(-50%) translateY(0);
-    opacity:1;
-  }
-
-  /* Mobile */
+  /* small screens */
   @media (max-width:768px){
-    .topbar{padding:10px;flex-wrap:wrap}
-    .search-area{width:100%;order:3;margin-top:10px;margin-left:0}
-    .quick-item{flex:0 0 140px}
-    .spotlight-grid{grid-template-columns:repeat(auto-fit, minmax(120px, 1fr))}
-    .listing{grid-template-columns:repeat(2, 1fr)}
+    .listing{ grid-template-columns: repeat(2, 1fr); }
+    .quick-item{ flex:0 0 140px; }
+    .brand h1{ font-size:16px; }
   }
 </style>
 </head>
@@ -577,14 +106,13 @@
       <div class="logo" title="POOJA STOP">PS</div>
       <div>
         <h1>POOJA STOP</h1>
-        <div class="delivery-badge">⚡ 11 MINS delivery</div>
       </div>
     </div>
 
     <div class="search-area">
       <div class="search-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#b96b2b" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="#b96b2b" stroke-width="2"/></svg>
-        <input id="search-input" placeholder="Search for pooja items..."/>
+        <input id="search-input" placeholder="Search for pooja items..." />
       </div>
     </div>
 
@@ -596,32 +124,17 @@
 </header>
 
 <main class="wrap">
-  <!-- Quick Picks Section -->
   <div class="section-header">
     <h2>Hey there, your quick picks</h2>
-    <span class="see-all" onclick="scrollToAll()">See All →</span>
   </div>
-  
   <div class="quick-picks" id="quickPicks"></div>
 
-  <!-- Spotlight Section -->
-  <div class="spotlight">
-    <div class="section-header">
-      <h2>In the Spotlight</h2>
-    </div>
-    <div class="spotlight-grid" id="spotlight"></div>
+  <div class="section-header" style="margin-top:28px">
+    <h2>Browse All Items</h2>
   </div>
-
-  <!-- Browse All -->
-  <div class="browse-all" id="browseSection">
-    <div class="section-header">
-      <h2>Browse All Items</h2>
-    </div>
-    <div class="listing" id="listing"></div>
-  </div>
+  <div class="listing" id="listing"></div>
 </main>
 
-<!-- Floating Cart -->
 <div class="cart-float" id="cartFloat" onclick="openCart()">
   🛒 Cart <span class="count" id="cartCountFloat">0</span>
 </div>
@@ -629,64 +142,55 @@
 <!-- Cart Modal -->
 <div class="modal" id="cartModal" onclick="closeCart(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
-    <div class="modal-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <h3>Your Cart</h3>
-      <button class="close-btn" onclick="closeCart()">✕</button>
+      <button onclick="closeCart()" style="border:0;background:#eee;padding:6px 10px;border-radius:8px;cursor:pointer">Close</button>
     </div>
-    <div class="cart-items" id="cartItems"></div>
-    <div class="cart-total">
-      <span>Total</span>
-      <span id="cartTotal">₹ 0</span>
+    <div id="cartItems" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div style="display:flex;justify-content:space-between;font-weight:700;margin-top:12px">
+      <div>Total</div><div id="cartTotal">₹0</div>
     </div>
-    <button class="checkout-btn" onclick="checkout()">Place Order</button>
+    <button style="width:100%;margin-top:12px;padding:12px;border-radius:8px;border:0;background:var(--primary);color:#fff;font-weight:700" onclick="checkout()">Place Order (Demo)</button>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div id="toast" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:10px 18px;border-radius:8px;display:none;z-index:2100"></div>
 
 <script>
-// ---------- Data ----------
+/* ---------- Data (note: v11 uses your uploaded local can image) ---------- */
 const DATA = [
-  { id:'v1', name:'Brass Diya — Small', tags:['Diya','Brass'], eta:'11 MINS', rating:4.8, price:150, oldPrice:200, discount:'25% OFF', img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
-  { id:'v2', name:'Agarbatti Pack (50)', tags:['Incense'], eta:'11 MINS', rating:4.6, price:60, oldPrice:90, discount:'33% OFF', img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
+  { id:'v1', name:'Brass Diya — Small', tags:['Diya','Brass'], eta:'11 MINS', rating:4.8, price:150, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
+  { id:'v2', name:'Agarbatti Pack (50)', tags:['Incense'], eta:'11 MINS', rating:4.6, price:60, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
   { id:'v3', name:'Kumkum & Haldi Set', tags:['Essentials'], eta:'11 MINS', rating:4.7, price:40, img:'https://images.unsplash.com/photo-1541661538399-7f4e9b0f5f5e?q=80&w=800&auto=format&fit=crop' },
-  { id:'v4', name:'Fresh Marigold Garland', tags:['Flowers'], eta:'11 MINS', rating:4.5, price:80, oldPrice:100, discount:'20% OFF', img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
+  { id:'v4', name:'Fresh Marigold Garland', tags:['Flowers'], eta:'11 MINS', rating:4.5, price:80, img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
   { id:'v5', name:'Camphor Box', tags:['Camphor'], eta:'11 MINS', rating:4.6, price:25, img:'https://images.unsplash.com/photo-1593005513054-c6a5a6f4a9e7?q=80&w=800&auto=format&fit=crop' },
   { id:'v6', name:'Sandalwood Paste', tags:['Chandan'], eta:'11 MINS', rating:4.9, price:120, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
   { id:'v7', name:'Brass Thali Medium', tags:['Plate','Brass'], eta:'11 MINS', rating:4.4, price:450, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
   { id:'v8', name:'Pooja Coconut Fresh', tags:['Offerings'], eta:'11 MINS', rating:4.3, price:60, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
-  { id:'v9', name:'Nandini Pasteurised Toned Milk', tags:['Offerings'], eta:'11 MINS', rating:4.5, price:24, size:'500 ml', img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=800&auto=format&fit=crop' },
-  { id:'v10', name:'Fresh White Eggs (6 pcs)', tags:['Offerings'], eta:'11 MINS', rating:4.6, price:55, oldPrice:75, size:'6 pieces', img:'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=800&auto=format&fit=crop' },
-  { id:'v11', name:'Pepsi Zero Sugar', tags:['Beverages'], eta:'11 MINS', rating:4.2, price:20, size:'400 ml', img:'https://images.unsplash.com/photo-1554866585-cd94860890b7?q=80&w=800&auto=format&fit=crop' },
+  { id:'v9', name:'Nandini Pasteurised Milk 500ml', tags:['Offerings'], eta:'11 MINS', rating:4.5, price:24, img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=800&auto=format&fit=crop' },
+  { id:'v10', name:'Fresh White Eggs (6 pcs)', tags:['Offerings'], eta:'11 MINS', rating:4.6, price:55, img:'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=800&auto=format&fit=crop' },
+  // this uses the local uploaded can image
+  { id:'v11', name:'Coca-Cola Diet Can', tags:['Beverages'], eta:'10 MINS', rating:4.2, price:20, img:'/mnt/data/3c6950f3-afde-4f89-9c6c-37db467bcb85.png' },
   { id:'v12', name:'Rose Incense Sticks', tags:['Incense','Premium'], eta:'20-30 min', rating:4.7, price:85, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
   { id:'v13', name:'Tulsi Mala 108 Beads', tags:['Accessories'], eta:'1-2 days', rating:4.9, price:250, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
   { id:'v14', name:'Silver Diya Set 3pc', tags:['Diya','Premium'], eta:'1-2 days', rating:4.9, price:1299, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
   { id:'v15', name:'Lotus Candles Pack of 6', tags:['Candles'], eta:'20-30 min', rating:4.5, price:180, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
 ];
 
-const spotlightCategories = [
-  { name:'Festival Essentials', desc:'Get ready for festivals', badge:'CLEARANCE SALE', type:'clearance', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400' },
-  { name:'Brass & Copper', desc:'Traditional items', badge:'FEATURED', type:'featured', img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=400' },
-  { name:'Premium Incense', desc:"Let's Try", badge:'BRAND IN FOCUS', type:'focus', img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=400' },
-  { name:'Fresh Flowers', desc:'Daily pooja needs', badge:'CLEARANCE SALE', type:'clearance', img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=400' },
-  { name:'Spiritual Items', desc:'For your devotion', badge:'FEATURED', type:'featured', img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=400' },
-  { name:'Combo Packs', desc:'Save more', badge:'BRAND IN FOCUS', type:'focus', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400' },
-];
-
 let cart = [];
 
-// ---------- Helpers ----------
+/* ---------- helpers ---------- */
 function formatPrice(n){ return '₹' + n; }
 function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=> t.classList.remove('show'), 2000);
+  t.style.display = 'block';
+  setTimeout(()=> t.style.display = 'none', 1400);
 }
-function persistCart(){ localStorage.setItem('pooja_cart_v1', JSON.stringify(cart)); updateCartUI(); }
-function loadCart(){ cart = JSON.parse(localStorage.getItem('pooja_cart_v1') || '[]'); updateCartUI(); }
+function persistCart(){ localStorage.setItem('pooja_cart_v2', JSON.stringify(cart)); updateCartUI(); }
+function loadCart(){ cart = JSON.parse(localStorage.getItem('pooja_cart_v2') || '[]'); updateCartUI(); }
 
-// ---------- Render Quick Picks ----------
+/* ---------- render quick picks (shows qty pill when added) ---------- */
 function renderQuickPicks(){
   const container = document.getElementById('quickPicks');
   container.innerHTML = '';
@@ -695,44 +199,29 @@ function renderQuickPicks(){
     const el = document.createElement('div');
     el.className = 'quick-item';
     el.innerHTML = `
-      ${item.discount ? `<div class="discount-badge">${item.discount}</div>` : ''}
       <img src="${item.img}" alt="${item.name}">
       <div class="duration">${item.eta}</div>
       <h3>${item.name}</h3>
-      ${item.size ? `<div class="size">${item.size}</div>` : ''}
-      <div class="price-row">
-        <span class="price">${formatPrice(item.price)}</span>
-        ${item.oldPrice ? `<span class="old-price"> ${formatPrice(item.oldPrice)}</span>` : ''}
-      </div>
-      <button class="add-btn" onclick="addToCart('${item.id}')">+</button>
+      <div class="price">${formatPrice(item.price)}</div>
     `;
     container.appendChild(el);
+
+    const inCart = cart.find(c=>c.id===item.id);
+    if(inCart){
+      const pill = createQtyPill(item.id, inCart.qty);
+      el.appendChild(pill);
+    } else {
+      const add = document.createElement('button');
+      add.className = 'add-btn';
+      add.textContent = '+';
+      add.onclick = ()=>{ addToCart(item.id); renderQuickPicks(); renderListing(); };
+      el.appendChild(add);
+    }
   });
 }
 
-// ---------- Render Spotlight ----------
-function renderSpotlight(){
-  const container = document.getElementById('spotlight');
-  container.innerHTML = '';
-  spotlightCategories.forEach(cat => {
-    const el = document.createElement('div');
-    el.className = 'spotlight-card';
-    el.innerHTML = `
-      <div class="badge ${cat.type === 'clearance' ? 'clearance' : cat.type === 'featured' ? 'featured' : 'focus'}">${cat.badge}</div>
-      <img src="${cat.img}" alt="${cat.name}">
-      <h3>${cat.name}</h3>
-      <p>${cat.desc}</p>
-    `;
-    el.addEventListener('click', ()=> {
-      // simple action: scroll to browse section
-      document.getElementById('browseSection').scrollIntoView({behavior:'smooth', block:'center'});
-    });
-    container.appendChild(el);
-  });
-}
-
-// ---------- Render Listing (Browse All) ----------
-function renderListing(filter = null){
+/* ---------- render listing (grid) ---------- */
+function renderListing(filter=null){
   const wrap = document.getElementById('listing');
   wrap.innerHTML = '';
   const items = filter ? DATA.filter(filter) : DATA;
@@ -749,14 +238,81 @@ function renderListing(filter = null){
           <div class="price">${formatPrice(item.price)}</div>
           <div class="rating">⭐ ${item.rating}</div>
         </div>
-        <button class="add-btn" onclick="addToCart('${item.id}')">+</button>
       </div>
     `;
     wrap.appendChild(card);
+
+    const inCart = cart.find(c=>c.id===item.id);
+    if(inCart){
+      // show qty pill
+      const pill = createQtyPill(item.id, inCart.qty);
+      card.appendChild(pill);
+    } else {
+      // place add button bottom-right
+      const addBtn = document.createElement('button');
+      addBtn.className = 'add-btn';
+      addBtn.textContent = '+';
+      addBtn.style.position = 'absolute';
+      addBtn.style.bottom = '12px';
+      addBtn.style.right = '12px';
+      addBtn.onclick = ()=>{ addToCart(item.id); renderListing(); renderQuickPicks(); };
+      card.appendChild(addBtn);
+    }
   });
 }
 
-// ---------- Cart UI ----------
+/* ---------- qty pill creator (matches your screenshot) ---------- */
+function createQtyPill(id, qty){
+  const pill = document.createElement('div');
+  pill.className = 'qty-pill';
+  pill.innerHTML = `
+    <button aria-label="decrease">−</button>
+    <div class="count">${qty}</div>
+    <button aria-label="increase">+</button>
+  `;
+  const btns = pill.querySelectorAll('button');
+  btns[0].addEventListener('click', (e)=>{
+    e.stopPropagation();
+    changeQty(id, -1);
+  });
+  btns[1].addEventListener('click', (e)=>{
+    e.stopPropagation();
+    changeQty(id, +1);
+  });
+  return pill;
+}
+
+/* ---------- cart operations ---------- */
+function addToCart(id, qty=1){
+  const existing = cart.find(c=>c.id===id);
+  if(existing) existing.qty += qty;
+  else cart.push({ id, qty });
+  persistCart();
+  renderListing();
+  renderQuickPicks();
+  showToast('Added to cart');
+}
+
+function changeQty(id, delta){
+  const idx = cart.findIndex(c=>c.id===id);
+  if(idx === -1 && delta>0){ addToCart(id, delta); return; }
+  cart[idx].qty += delta;
+  if(cart[idx].qty <= 0) cart.splice(idx,1);
+  persistCart();
+  renderListing();
+  renderQuickPicks();
+  renderCartModal(); // if open
+}
+
+function removeFromCart(id){
+  cart = cart.filter(c=>c.id !== id);
+  persistCart();
+  renderListing();
+  renderQuickPicks();
+  renderCartModal();
+}
+
+/* ---------- cart UI ---------- */
 function updateCartUI(){
   const count = cart.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cartCountFloat').textContent = count;
@@ -767,28 +323,16 @@ function updateCartUI(){
   document.getElementById('cartTotal').textContent = formatPrice(total);
 }
 
-function addToCart(id, qty = 1){
-  const existing = cart.find(c=>c.id===id);
-  if(existing) existing.qty += qty;
-  else cart.push({ id, qty });
-  persistCart();
-  showToast('Added to cart');
-}
-
-// ---------- Cart modal / interactions ----------
+/* Cart modal */
 function openCart(){
   renderCartModal();
   document.getElementById('cartModal').classList.add('show');
 }
 function closeCart(ev){
-  if(ev) {
-    // close if background clicked or close btn pressed
-    if(ev.target && ev.target.id === 'cartModal') document.getElementById('cartModal').classList.remove('show');
-    else if(ev === true) document.getElementById('cartModal').classList.remove('show');
-    else if(!ev.target) document.getElementById('cartModal').classList.remove('show');
-  } else {
-    document.getElementById('cartModal').classList.remove('show');
-  }
+  if(!ev) { document.getElementById('cartModal').classList.remove('show'); return; }
+  // close only on backdrop or close button
+  if(ev.target && ev.target.id === 'cartModal') document.getElementById('cartModal').classList.remove('show');
+  if(ev === true) document.getElementById('cartModal').classList.remove('show');
 }
 
 function renderCartModal(){
@@ -803,20 +347,25 @@ function renderCartModal(){
     const it = DATA.find(d=>d.id === entry.id);
     const row = document.createElement('div');
     row.className = 'cart-row';
+    row.style.display = 'flex';
+    row.style.justifyContent = 'space-between';
+    row.style.alignItems = 'center';
     row.innerHTML = `
-      <img src="${it.img}" alt="${it.name}">
-      <div class="cart-row-info">
-        <h4>${it.name}</h4>
-        <div>Price: ${formatPrice(it.price)}</div>
-        <div class="qty-controls">
-          <button class="qty-btn" onclick="changeQty('${entry.id}', -1)">-</button>
-          <div>${entry.qty}</div>
-          <button class="qty-btn" onclick="changeQty('${entry.id}', 1)">+</button>
+      <div style="display:flex;gap:12px;align-items:center">
+        <img src="${it.img}" alt="${it.name}" style="width:70px;height:70px;object-fit:cover;border-radius:8px">
+        <div>
+          <div style="font-weight:700">${it.name}</div>
+          <div style="color:#666">Price: ${formatPrice(it.price)}</div>
         </div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="font-weight:700">${formatPrice(it.price * entry.qty)}</div>
-        <button style="padding:6px;border-radius:8px;border:none;background:#fff;cursor:pointer" onclick="removeFromCart('${entry.id}')">Remove</button>
+      <div style="text-align:right">
+        <div style="margin-bottom:8px;font-weight:700">${formatPrice(it.price * entry.qty)}</div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
+          <button style="padding:6px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer" onclick="changeQty('${entry.id}', -1)">−</button>
+          <div style="min-width:24px;text-align:center">${entry.qty}</div>
+          <button style="padding:6px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer" onclick="changeQty('${entry.id}', 1)">+</button>
+          <button style="margin-left:8px;padding:6px 10px;border-radius:6px;border:0;background:#eee;cursor:pointer" onclick="removeFromCart('${entry.id}')">Remove</button>
+        </div>
       </div>
     `;
     holder.appendChild(row);
@@ -824,54 +373,36 @@ function renderCartModal(){
   updateCartUI();
 }
 
-function changeQty(id, delta){
-  const idx = cart.findIndex(c=>c.id===id);
-  if(idx === -1) return;
-  cart[idx].qty += delta;
-  if(cart[idx].qty <= 0) cart.splice(idx,1);
-  persistCart();
-  renderCartModal();
-}
-function removeFromCart(id){
-  cart = cart.filter(c=>c.id !== id);
-  persistCart();
-  renderCartModal();
-}
-
-// ---------- Checkout (demo save to localStorage) ----------
+/* ---------- checkout (demo) ---------- */
 function checkout(){
-  if(cart.length === 0){ showToast('Cart is empty'); return; }
-  const orders = JSON.parse(localStorage.getItem('pooja_orders_v1') || '[]');
+  if(cart.length === 0){ showToast('Cart empty'); return; }
+  const orders = JSON.parse(localStorage.getItem('pooja_orders_v2') || '[]');
   orders.push({ ts: new Date().toISOString(), items: cart });
-  localStorage.setItem('pooja_orders_v1', JSON.stringify(orders));
+  localStorage.setItem('pooja_orders_v2', JSON.stringify(orders));
   cart = [];
   persistCart();
   renderCartModal();
   showToast('Order saved locally (demo)');
-  setTimeout(()=> closeCart(true), 800);
+  setTimeout(()=> closeCart(true), 600);
 }
 
-// ---------- Search ----------
+/* ---------- search handling ---------- */
 document.getElementById('search-input').addEventListener('input', debounce(function(e){
   const q = e.target.value.trim().toLowerCase();
   if(!q) renderListing();
   else renderListing(item => item.name.toLowerCase().includes(q) || item.tags.join(' ').toLowerCase().includes(q));
 }, 220));
 
-// ---------- Utility ----------
+/* ---------- utilities ---------- */
 function debounce(fn, ms=200){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
 
-// ---------- UI helpers ----------
-function scrollToAll(){
-  document.getElementById('browseSection').scrollIntoView({behavior:'smooth', block:'start'});
-}
-
-// ---------- Init ----------
+/* ---------- init ---------- */
 window.addEventListener('load', ()=>{
+  const stored = JSON.parse(localStorage.getItem('pooja_cart_v2') || '[]');
+  if(Array.isArray(stored)) cart = stored;
   renderQuickPicks();
-  renderSpotlight();
   renderListing();
-  loadCart();
+  updateCartUI();
 });
 </script>
 
