@@ -4,15 +4,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>POOJA STOP — Market</title>
-<meta name="description" content="POOJA STOP — curated pooja essentials. Swiggy-like layout, paper-template colors." />
+<meta name="description" content="POOJA STOP — curated pooja essentials. Modern shopping experience." />
 <style>
   :root{
-    /* theme derived from your paper template */
-    --primary: #8a2b0a;      /* deep warm brown */
-    --accent:  #ffd27a;      /* warm gold */
-    --muted:   #6b2b0b;      /* darker text */
+    --primary: #8a2b0a;
+    --accent: #ffd27a;
+    --muted: #6b2b0b;
     --card-bg: rgba(255,255,255,0.96);
-    --glass: rgba(255,255,255,0.06);
     --shadow: 0 10px 30px rgba(0,0,0,0.18);
     --max-width: 1200px;
   }
@@ -24,16 +22,31 @@
     background: linear-gradient(180deg,#f7ebe0,#f3ded1);
     color: #222;
     -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
     line-height:1.35;
   }
 
-  /* Header similar layout to Swiggy */
+  /* Smooth animations */
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes slideIn{
+    from{transform:translateX(-20px);opacity:0}
+    to{transform:translateX(0);opacity:1}
+  }
+  @keyframes scaleIn{
+    from{transform:scale(0.9);opacity:0}
+    to{transform:scale(1);opacity:1}
+  }
+
+  /* Header */
   header.site-head{
     position:sticky; top:0; z-index:1200;
-    backdrop-filter: blur(6px);
-    background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.55));
-    border-bottom: 1px solid rgba(0,0,0,0.04);
+    backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
   }
   .topbar{
     max-width:var(--max-width);
@@ -43,50 +56,90 @@
   }
   .brand{
     display:flex; align-items:center; gap:12px; cursor:pointer;
+    transition: transform 0.2s ease;
   }
+  .brand:hover{transform:scale(1.02)}
   .brand .logo{
-    width:44px; height:44px; border-radius:8px;
-    background-image: url('/mnt/data/Web template.png');
-    background-size: cover;
-    background-position:center;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    width:44px; height:44px; border-radius:12px;
+    background: linear-gradient(135deg, var(--primary), #b83c1a);
+    box-shadow: 0 6px 18px rgba(138,43,10,0.3);
     display:flex; align-items:center; justify-content:center;
-    font-weight:900; color:#7a0010;
+    font-weight:900; color:#fff; font-size:20px;
+    transition: all 0.3s ease;
   }
+  .brand:hover .logo{transform:rotate(5deg);box-shadow: 0 8px 24px rgba(138,43,10,0.4)}
   .brand h1{ font-size:18px; color:var(--muted); letter-spacing:1px; margin:0 }
+  
   .search-area{
     flex:1; display:flex; align-items:center; gap:12px; margin-left:8px;
   }
   .search-box{
-    flex:1; display:flex; align-items:center; gap:10px; padding:10px 12px;
-    border-radius:10px; background:#fff; box-shadow: var(--shadow);
+    flex:1; display:flex; align-items:center; gap:10px; padding:10px 14px;
+    border-radius:12px; background:#fff; box-shadow: var(--shadow);
     border:1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+  }
+  .search-box:focus-within{
+    box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    border-color: var(--accent);
   }
   .search-box input{
     border:0; outline:none; font-size:15px; width:100%;
   }
+  .search-box select{
+    border:0;background:transparent;outline:none;cursor:pointer;
+    padding:4px 8px;border-radius:6px;
+    transition:background 0.2s ease;
+  }
+  .search-box select:hover{background:rgba(0,0,0,0.03)}
+  
   .actions{ display:flex; gap:10px; align-items:center }
-  .action-btn{ padding:8px 10px; border-radius:8px; background:transparent; border:1px solid rgba(0,0,0,0.06); cursor:pointer}
+  .action-btn{
+    padding:8px 12px; border-radius:10px; background:transparent;
+    border:1px solid rgba(0,0,0,0.08); cursor:pointer;
+    transition: all 0.2s ease;
+    font-weight:500;
+  }
+  .action-btn:hover{
+    background:var(--primary);color:#fff;
+    transform:translateY(-2px);
+    box-shadow:0 6px 12px rgba(138,43,10,0.2);
+  }
 
-  /* main layout */
   .wrap{
     max-width:var(--max-width);
     margin:18px auto;
     padding:0 18px;
   }
 
-  /* categories (horizontal chips) */
+  /* Categories */
   .categories{
     display:flex; gap:10px; overflow:auto; padding:12px 6px; margin-bottom:12px;
+    animation: slideIn 0.4s ease;
   }
+  .categories::-webkit-scrollbar{height:6px}
+  .categories::-webkit-scrollbar-track{background:transparent}
+  .categories::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:10px}
+  
   .chip{
-    flex:0 0 auto; padding:8px 12px; border-radius:22px; background:var(--card-bg);
-    border:1px solid rgba(0,0,0,0.04); cursor:pointer; font-weight:600; color:var(--muted);
+    flex:0 0 auto; padding:10px 16px; border-radius:24px; background:var(--card-bg);
+    border:1px solid rgba(0,0,0,0.06); cursor:pointer; font-weight:600; color:var(--muted);
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select:none;
   }
-  .chip.active{ background: linear-gradient(90deg,var(--accent), #f6c86a); color:#6b2b0b; box-shadow:0 10px 30px rgba(0,0,0,0.12) }
+  .chip:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 24px rgba(0,0,0,0.12);
+  }
+  .chip.active{
+    background: linear-gradient(90deg,var(--accent), #f6c86a);
+    color:#6b2b0b;
+    box-shadow:0 10px 30px rgba(255,210,122,0.4);
+    transform:translateY(-2px);
+  }
 
-  /* main area with left column (list) and right cart */
+  /* Layout */
   .layout{
     display:grid;
     grid-template-columns: 1fr 340px;
@@ -94,80 +147,384 @@
     align-items:start;
   }
 
-  /* vendor / item cards grid */
+  /* Listing */
   .listing{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
     gap:18px;
   }
   .vendor{
-    background:var(--card-bg); border-radius:12px; padding:12px; box-shadow:var(--shadow); border: 1px solid rgba(0,0,0,0.04);
-    display:flex; gap:12px; align-items:flex-start;
+    background:var(--card-bg);
+    border-radius:16px;
+    padding:0;
+    box-shadow:var(--shadow);
+    border: 1px solid rgba(0,0,0,0.04);
+    overflow:hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeIn 0.4s ease;
+    cursor:pointer;
+    position:relative;
   }
+  .vendor::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(135deg, transparent, rgba(255,210,122,0.1));
+    opacity:0;
+    transition:opacity 0.3s ease;
+    pointer-events:none;
+  }
+  .vendor:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+  }
+  .vendor:hover::before{opacity:1}
+  
   .vendor .thumb{
-    width:110px; height:90px; border-radius:10px; background:#eee; overflow:hidden; flex-shrink:0;
+    width:100%; height:180px; background:#eee; overflow:hidden;
+    position:relative;
   }
-  .vendor .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
-  .vendor .meta{ flex:1 }
-  .vendor h3{ margin:0 0 6px 0; font-size:16px; color:var(--muted) }
-  .vendor .tags{ font-size:13px; color:#6b6b6b; margin-bottom:6px }
-  .vendor .info{ display:flex; gap:8px; align-items:center; font-size:13px; color:#444; margin-top:6px }
-  .price-badge{ margin-left:auto; background: linear-gradient(180deg,var(--accent), #f0b85a); padding:6px 8px; border-radius:8px; font-weight:700; color:#6b2b0b; box-shadow: 0 6px 18px rgba(0,0,0,0.08) }
+  .vendor .thumb img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition: transform 0.4s ease;
+  }
+  .vendor:hover .thumb img{transform:scale(1.08)}
+  
+  .vendor .thumb .quick-badge{
+    position:absolute;
+    top:12px;right:12px;
+    background:rgba(255,255,255,0.95);
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:700;
+    color:var(--primary);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    backdrop-filter:blur(4px);
+  }
+  
+  .vendor .meta{
+    padding:14px;
+  }
+  .vendor h3{
+    margin:0 0 8px 0;
+    font-size:17px;
+    color:var(--muted);
+    font-weight:700;
+  }
+  .vendor .tags{
+    font-size:13px;
+    color:#6b6b6b;
+    margin-bottom:10px;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .vendor .tag-item{
+    background:rgba(138,43,10,0.08);
+    padding:3px 8px;
+    border-radius:12px;
+    font-size:11px;
+    font-weight:600;
+  }
+  .vendor .info{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    font-size:13px;
+    color:#444;
+    margin-top:8px;
+    margin-bottom:12px;
+  }
+  .rating{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-weight:600;
+  }
+  .price-badge{
+    margin-left:auto;
+    background: linear-gradient(180deg,var(--accent), #f0b85a);
+    padding:8px 12px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:16px;
+    color:#6b2b0b;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
 
-  .vendor .cta { margin-top:8px; display:flex; gap:8px; align-items:center }
-  .btn-add{ padding:8px 12px; border-radius:10px; border:none; background:var(--primary); color:#fff; cursor:pointer; }
+  .vendor .cta {
+    display:flex;
+    gap:8px;
+  }
+  .btn-add{
+    flex:1;
+    padding:10px 16px;
+    border-radius:10px;
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+    transition: all 0.2s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .btn-add::before{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    width:0;height:0;
+    border-radius:50%;
+    background:rgba(255,255,255,0.3);
+    transform:translate(-50%,-50%);
+    transition:width 0.4s ease, height 0.4s ease;
+  }
+  .btn-add:hover::before{width:300px;height:300px}
+  .btn-add:hover{
+    background:#6b2b0b;
+    transform:translateY(-2px);
+    box-shadow:0 8px 16px rgba(138,43,10,0.3);
+  }
+  .btn-add:active{transform:translateY(0)}
+  
+  .btn-view{
+    padding:10px 16px;
+    border-radius:10px;
+    border:1px solid rgba(0,0,0,0.1);
+    background:#fff;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    font-weight:500;
+  }
+  .btn-view:hover{
+    background:#f5f5f5;
+    border-color:var(--primary);
+  }
 
-  /* right sidebar cart */
+  /* Cart Panel */
   .cart-panel{
-    position:sticky; top:92px; background:linear-gradient(180deg, #fff, #fff); border-radius:12px; padding:12px; box-shadow:var(--shadow);
+    position:sticky;
+    top:92px;
+    background:linear-gradient(180deg, #fff, #fefcfa);
+    border-radius:16px;
+    padding:16px;
+    box-shadow:var(--shadow);
     border:1px solid rgba(0,0,0,0.04);
     height:fit-content;
+    animation: scaleIn 0.4s ease;
   }
-  .cart-panel h4{ margin:0 0 8px 0; color:var(--muted) }
-  .cart-items{ display:flex; flex-direction:column; gap:8px; max-height:360px; overflow:auto; padding-right:6px }
-  .cart-row{ display:flex; gap:8px; align-items:center; justify-content:space-between; padding:6px; border-radius:8px; background:#faf7f4; border:1px solid rgba(0,0,0,0.03) }
-  .cart-row .left{ display:flex; gap:8px; align-items:center }
-  .cart-row img{ width:48px; height:48px; border-radius:6px; object-fit:cover }
-  .cart-summary{ margin-top:10px; font-weight:700; display:flex; justify-content:space-between; align-items:center }
-  .checkout{ margin-top:10px; padding:10px; border-radius:8px; background:linear-gradient(90deg,var(--accent), #f0b85a); color:#6b2b0b; font-weight:700; border:none; cursor:pointer; width:100% }
+  .cart-panel h4{
+    margin:0 0 12px 0;
+    color:var(--muted);
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  #cartCount{
+    background:var(--primary);
+    color:#fff;
+    padding:4px 10px;
+    border-radius:12px;
+    font-size:14px;
+  }
+  
+  .cart-items{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-height:400px;
+    overflow:auto;
+    padding-right:6px;
+    margin-bottom:12px;
+  }
+  .cart-items::-webkit-scrollbar{width:6px}
+  .cart-items::-webkit-scrollbar-track{background:transparent}
+  .cart-items::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:10px}
+  
+  .cart-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px;
+    border-radius:12px;
+    background:#faf7f4;
+    border:1px solid rgba(0,0,0,0.03);
+    transition:all 0.2s ease;
+    animation:slideIn 0.3s ease;
+  }
+  .cart-row:hover{
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transform:translateX(2px);
+  }
+  .cart-row .left{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex:1;
+  }
+  .cart-row img{
+    width:54px;
+    height:54px;
+    border-radius:8px;
+    object-fit:cover;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  }
+  .qty-control{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:4px;
+  }
+  .qty-btn{
+    width:24px;
+    height:24px;
+    border-radius:6px;
+    border:1px solid rgba(0,0,0,0.1);
+    background:#fff;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:700;
+    transition:all 0.2s ease;
+  }
+  .qty-btn:hover{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
+  }
+  .qty-btn:active{transform:scale(0.9)}
+  
+  .cart-summary{
+    margin-top:12px;
+    padding-top:12px;
+    border-top:2px solid rgba(0,0,0,0.06);
+    font-weight:700;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:18px;
+  }
+  .checkout{
+    margin-top:12px;
+    padding:14px;
+    border-radius:12px;
+    background:linear-gradient(90deg,var(--accent), #f0b85a);
+    color:#6b2b0b;
+    font-weight:700;
+    border:none;
+    cursor:pointer;
+    width:100%;
+    font-size:16px;
+    transition:all 0.3s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .checkout::before{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    width:0;height:0;
+    border-radius:50%;
+    background:rgba(255,255,255,0.4);
+    transform:translate(-50%,-50%);
+    transition:width 0.4s ease, height 0.4s ease;
+  }
+  .checkout:hover::before{width:400px;height:400px}
+  .checkout:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 24px rgba(255,210,122,0.4);
+  }
+  .checkout:active{transform:translateY(0)}
+  .checkout:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+  }
 
-  /* mobile adjustments */
+  /* Empty state */
+  .empty-state{
+    text-align:center;
+    padding:40px 20px;
+    color:#999;
+  }
+  .empty-state svg{
+    width:80px;
+    height:80px;
+    margin-bottom:16px;
+    opacity:0.3;
+  }
+
+  /* Mobile adjustments */
   @media (max-width:980px){
     .layout{ grid-template-columns: 1fr; }
-    .cart-panel{ position:fixed; right:10px; bottom:10px; width:92%; max-width:420px; z-index:1300; }
+    .cart-panel{
+      position:fixed;
+      right:10px;
+      bottom:10px;
+      width:92%;
+      max-width:420px;
+      z-index:1300;
+      max-height:70vh;
+      overflow:auto;
+    }
   }
 
-  /* small mobile */
   @media (max-width:560px){
-    .topbar{ padding:10px }
+    .topbar{ padding:10px; flex-wrap:wrap }
     .brand h1{ font-size:16px }
-    .vendor .thumb{ width:96px; height:76px }
-    .vendor h3{ font-size:15px }
+    .search-area{ min-width:100%; order:3 }
+    .listing{ grid-template-columns: 1fr }
+    .vendor .thumb{ height:160px }
   }
 
-  /* subtle utilities */
+  /* Utilities */
   .muted{ color:#6b6b6b; font-size:13px }
   .small{ font-size:13px; color:#555 }
   .center{ text-align:center }
+  
+  /* Notification toast */
+  .toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:var(--primary);
+    color:#fff;
+    padding:12px 24px;
+    border-radius:12px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.2);
+    z-index:2000;
+    font-weight:600;
+    opacity:0;
+    transition:all 0.3s ease;
+  }
+  .toast.show{
+    transform:translateX(-50%) translateY(0);
+    opacity:1;
+  }
 </style>
 </head>
 <body>
 
 <header class="site-head">
   <div class="topbar">
-    <div class="brand" onclick="location.hash='home'">
-      <div class="logo" title="POOJA STOP">PS</div>
+    <div class="brand" onclick="location.reload()">
+      <div class="logo">PS</div>
       <div>
         <h1>POOJA STOP</h1>
         <div class="small muted">Pooja essentials & combos</div>
       </div>
     </div>
 
-    <div class="search-area" style="min-width:260px">
+    <div class="search-area">
       <div class="search-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#b96b2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#b96b2b" stroke-width="2"/></svg>
-        <input id="search-input" placeholder="Search items, combos, or rituals (eg. diya, kumkum, festival)"/>
-        <select id="sort" style="border:0;background:transparent;outline:none">
+        <input id="search-input" placeholder="Search items, combos, or rituals..."/>
+        <select id="sort">
           <option value="popular">Popular</option>
           <option value="price_low">Price: Low</option>
           <option value="price_high">Price: High</option>
@@ -176,39 +533,43 @@
     </div>
 
     <div class="actions">
-      <button class="action-btn" id="saved">Saved</button>
-      <button class="action-btn" id="account">Sign in</button>
+      <button class="action-btn" id="saved">❤️ Saved</button>
+      <button class="action-btn" id="account">👤 Sign in</button>
     </div>
   </div>
 </header>
 
 <main class="wrap">
-  <div class="categories" id="categories">
-    <!-- chips populated by JS -->
-  </div>
+  <div class="categories" id="categories"></div>
 
   <div class="layout">
     <div>
-      <div class="listing" id="listing">
-        <!-- vendor cards populated by JS -->
-      </div>
+      <div class="listing" id="listing"></div>
     </div>
 
-    <aside class="cart-panel" id="cartPanel" aria-live="polite">
-      <h4>Your Cart <span id="cartCount" style="font-weight:700;color:var(--primary);">0</span></h4>
+    <aside class="cart-panel" id="cartPanel">
+      <h4>
+        <span>🛒 Your Cart</span>
+        <span id="cartCount">0</span>
+      </h4>
       <div class="cart-items" id="cartItems">
-        <div class="center muted">No items yet — add from the list</div>
+        <div class="center muted empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+          <div>No items yet</div>
+          <div class="small">Add from the list</div>
+        </div>
       </div>
       <div class="cart-summary">
         <span>Total</span><span id="cartTotal">₹ 0</span>
       </div>
-      <button class="checkout" id="checkoutBtn">Place Order (Demo)</button>
+      <button class="checkout" id="checkoutBtn">Place Order</button>
     </aside>
   </div>
 </main>
 
+<div class="toast" id="toast"></div>
+
 <script>
-/* ---------- Sample data (pooja-appropriate items/bundles) ---------- */
 const DATA = [
   { id:'v1', name:'Brass Diya — Small', tags:['Diya','Brass'], eta:'10-15 min', rating:4.8, price:150, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
   { id:'v2', name:'Agarbatti Pack (50)', tags:['Incense'], eta:'5-10 min', rating:4.6, price:60, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
@@ -221,13 +582,30 @@ const DATA = [
   { id:'v9', name:'Small Ghanta (Bell)', tags:['Accessories'], eta:'5-15 min', rating:4.6, price:220, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
   { id:'v10', name:'Pooja Organizer Box', tags:['Storage'], eta:'3-7 days', rating:4.7, price:999, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
   { id:'v11', name:'Festival Combo (Diya+Garland+Camphor)', tags:['Combo','Festival'], eta:'1 day', rating:4.8, price:699, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
+  { id:'v12', name:'Rose Incense Sticks', tags:['Incense','Premium'], eta:'5-10 min', rating:4.7, price:85, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
+  { id:'v13', name:'Tulsi Mala (108 Beads)', tags:['Accessories','Spiritual'], eta:'15-20 min', rating:4.9, price:250, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
+  { id:'v14', name:'Silver Diya Set (3pc)', tags:['Diya','Silver','Premium'], eta:'1-2 days', rating:4.9, price:1299, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
+  { id:'v15', name:'Lotus Candles (Pack of 6)', tags:['Candles','Decorative'], eta:'10-15 min', rating:4.5, price:180, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
+  { id:'v16', name:'Dhoop Sticks (Guggul)', tags:['Incense','Traditional'], eta:'5-10 min', rating:4.6, price:95, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
+  { id:'v17', name:'Rudraksha Bracelet', tags:['Accessories','Spiritual'], eta:'10-15 min', rating:4.8, price:450, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
+  { id:'v18', name:'Kalash (Copper)', tags:['Essentials','Copper'], eta:'1-2 days', rating:4.7, price:850, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
+  { id:'v19', name:'Fresh Jasmine Garland', tags:['Flowers','Fresh'], eta:'30-40 min', rating:4.6, price:120, img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
+  { id:'v20', name:'Pooja Kit (Complete)', tags:['Combo','Essentials'], eta:'5-10 min', rating:4.8, price:399, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
+  { id:'v21', name:'Brass Kalash (Small)', tags:['Brass','Essentials'], eta:'20-30 min', rating:4.5, price:550, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
+  { id:'v22', name:'Mogra Incense Cones', tags:['Incense','Fragrant'], eta:'5-10 min', rating:4.7, price:70, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
+  { id:'v23', name:'Panchamrit Set', tags:['Offerings','Essentials'], eta:'10-15 min', rating:4.4, price:150, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
+  { id:'v24', name:'Aarti Thali (Decorated)', tags:['Plate','Decorative'], eta:'1-2 days', rating:4.8, price:699, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
+  { id:'v25', name:'Cotton Wicks (100pcs)', tags:['Essentials'], eta:'5-10 min', rating:4.3, price:35, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
+  { id:'v26', name:'Nag Champa Incense', tags:['Incense','Premium'], eta:'5-10 min', rating:4.9, price:110, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
+  { id:'v27', name:'Hanuman Chalisa Book', tags:['Books','Spiritual'], eta:'1-2 days', rating:4.6, price:80, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
+  { id:'v28', name:'Lakshmi Diya Stand', tags:['Diya','Decorative'], eta:'20-30 min', rating:4.7, price:380, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
+  { id:'v29', name:'Vibhuti (Sacred Ash)', tags:['Essentials','Traditional'], eta:'5-10 min', rating:4.5, price:45, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
+  { id:'v30', name:'Diwali Special Combo', tags:['Combo','Festival','Premium'], eta:'1 day', rating:4.9, price:1499, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
 ];
 
-/* ---------- categories auto-derived ---------- */
 const categories = Array.from(new Set(DATA.flatMap(d=>d.tags))).sort();
 categories.unshift('All');
 
-/* ---------- Render categories ---------- */
 const categoriesEl = document.getElementById('categories');
 categories.forEach(cat=>{
   const chip = document.createElement('div');
@@ -242,25 +620,27 @@ categories.forEach(cat=>{
   categoriesEl.appendChild(chip);
 });
 
-/* ---------- Render listing ---------- */
 const listing = document.getElementById('listing');
 
 function createVendorCard(item){
   const el = document.createElement('div');
   el.className = 'vendor';
+  const tagsHtml = item.tags.map(t=>`<span class="tag-item">${t}</span>`).join('');
   el.innerHTML = `
-    <div class="thumb"><img src="${item.img}" alt="${item.name}"></div>
+    <div class="thumb">
+      <img src="${item.img}" alt="${item.name}">
+      <div class="quick-badge">${item.eta}</div>
+    </div>
     <div class="meta">
       <h3>${item.name}</h3>
-      <div class="tags">${item.tags.join(' • ')}</div>
+      <div class="tags">${tagsHtml}</div>
       <div class="info">
         <div class="rating">⭐ ${item.rating}</div>
-        <div class="eta"> • ${item.eta}</div>
         <div class="price-badge">${formatPrice(item.price)}</div>
       </div>
       <div class="cta">
-        <button class="btn-add" data-id="${item.id}">Add</button>
-        <button class="action-btn" data-view="${item.id}">View</button>
+        <button class="btn-add" data-id="${item.id}">Add to Cart</button>
+        <button class="btn-view" data-view="${item.id}">👁️</button>
       </div>
     </div>
   `;
@@ -272,13 +652,12 @@ function formatPrice(n){ return '₹ ' + n; }
 function renderListing(items){
   listing.innerHTML = '';
   if(!items.length){
-    listing.innerHTML = '<div class="center muted">No results found</div>';
+    listing.innerHTML = '<div class="center muted" style="grid-column:1/-1;padding:60px 20px">No results found</div>';
     return;
   }
   items.forEach(it => listing.appendChild(createVendorCard(it)));
 }
 
-/* ---------- Filter / Search ---------- */
 const searchInput = document.getElementById('search-input');
 const sortSelect = document.getElementById('sort');
 
@@ -299,22 +678,31 @@ function filterAndRender(){
   renderListing(filtered);
 }
 
-/* wire search and sort */
 searchInput.addEventListener('input', debounce(filterAndRender, 180));
 sortSelect.addEventListener('change', filterAndRender);
 
-/* initial render */
 renderListing(DATA);
 
-/* ---------- Cart logic (local, demo) ---------- */
-let cart = JSON.parse(localStorage.getItem('pooja_cart') || '[]');
+let cart = [];
 
-function saveCart(){ localStorage.setItem('pooja_cart', JSON.stringify(cart)); updateCartUI(); }
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 2000);
+}
+
 function updateCartUI(){
   const cartItemsEl = document.getElementById('cartItems');
   cartItemsEl.innerHTML = '';
+  
   if(cart.length === 0){
-    cartItemsEl.innerHTML = '<div class="center muted">No items yet — add from the list</div>';
+    cartItemsEl.innerHTML = `
+      <div class="center muted empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <div>No items yet</div>
+        <div class="small">Add from the list</div>
+      </div>`;
   } else {
     cart.forEach(entry=>{
       const item = DATA.find(d=>d.id === entry.id);
@@ -324,77 +712,6 @@ function updateCartUI(){
         <div class="left">
           <img src="${item.img}" alt="${item.name}">
           <div>
-            <div style="font-weight:700">${item.name}</div>
-            <div class="small muted">Qty: ${entry.qty}</div>
-          </div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-weight:700">${formatPrice(item.price * entry.qty)}</div>
-          <div style="margin-top:6px"><button data-remove="${entry.id}" style="padding:6px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button></div>
-        </div>`;
-      cartItemsEl.appendChild(row);
-    });
-
-    cartItemsEl.querySelectorAll('[data-remove]').forEach(btn=>{
-      btn.addEventListener('click', (ev)=>{
-        const id = ev.currentTarget.getAttribute('data-remove');
-        cart = cart.filter(c=>c.id !== id);
-        saveCart();
-      });
-    });
-  }
-
-  const total = cart.reduce((s,e)=> {
-    const item = DATA.find(d=>d.id===e.id);
-    return s + (item ? item.price * e.qty : 0);
-  }, 0);
-  document.getElementById('cartTotal').textContent = formatPrice(total);
-  document.getElementById('cartCount').textContent = cart.reduce((s,e)=>s+e.qty, 0);
-}
-
-/* add to cart */
-document.addEventListener('click', (ev)=>{
-  if(ev.target.matches('.btn-add')){
-    const id = ev.target.getAttribute('data-id');
-    const existing = cart.find(c=>c.id===id);
-    if(existing) existing.qty += 1; else cart.push({ id, qty: 1 });
-    saveCart();
-  }
-  if(ev.target.matches('[data-view]')){
-    const id = ev.target.getAttribute('data-view');
-    // open a small modal / alert with detail (simple)
-    const item = DATA.find(d=>d.id===id);
-    alert(item.name + "\\n\\n" + item.tags.join(', ') + "\\nPrice: " + formatPrice(item.price) + "\\nRating: " + item.rating + "\\nETA: " + item.eta);
-  }
-});
-
-/* checkout demo */
-document.getElementById('checkoutBtn').addEventListener('click', ()=>{
-  if(cart.length === 0){ alert('Cart is empty'); return; }
-  const order = { ts: new Date().toISOString(), items: cart };
-  const orders = JSON.parse(localStorage.getItem('pooja_orders') || '[]');
-  orders.push(order);
-  localStorage.setItem('pooja_orders', JSON.stringify(orders));
-  cart = []; saveCart();
-  alert('Order saved locally (demo). You can wire this to a backend or Google Sheet.');
-});
-
-/* remove handlers from cart (delegated by updateCartUI) handled above */
-
-/* init cart UI */
-updateCartUI();
-
-/* ---------- utility ---------- */
-function debounce(fn, ms=200){
-  let t;
-  return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }
-}
-
-/* initial category selection highlight done above; allow keyboard "/" to focus search */
-document.addEventListener('keydown', (e)=>{
-  if(e.key === '/') { e.preventDefault(); searchInput.focus(); }
-});
-</script>
-
-</body>
-</html>
+            <div style="font-weight:700;font-size:14px">${item.name}</div>
+            <div class="qty-control">
+              <button class="qty-btn"
