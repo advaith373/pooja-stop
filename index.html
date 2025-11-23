@@ -1,266 +1,614 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>POOJA STOP</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>POOJA STOP — Catalog</title>
+  <meta name="description" content="POOJA STOP — curated pooja items and combos. Individual product pages, cart, and order demo." />
 
   <style>
     :root{
       --paper-width: 780px;
-      --paper-max-translate: 900px;
-      --rod-rotate-max: 12deg;
-      --accent: #8a2b0a;
+      --paper-max-translate: 980px;
+      --accent:#8a2b0a;
     }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(#7a0010,#5a000c);
-      color:#222;
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;background: linear-gradient(#7a0010,#5a000c); color:#222; -webkit-font-smoothing:antialiased}
+    a{color:inherit}
 
-    /* HEADER */
     header{
-      position:fixed; top:0; left:0; right:0;
-      background:rgba(0,0,0,0.2);
-      padding:12px 24px;
-      display:flex; justify-content:space-between; align-items:center;
-      backdrop-filter: blur(6px);
-      color:#fff; z-index:2000;
+      position:fixed; inset:0 0 auto 0; z-index:1200; display:flex; justify-content:space-between; align-items:center;
+      padding:12px 20px; backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.14));
+      color:#fff;
     }
-    header .brand{
-      font-size:22px; font-weight:700; letter-spacing:1px;
-      display:flex; gap:10px; align-items:center;
-    }
-    header nav ul{
-      list-style:none; display:flex; gap:16px;
-    }
-    header nav a{
-      text-decoration:none; color:#fff; padding:6px 10px;
-      border-radius:6px;
-    }
-    header nav a:hover{
-      background:rgba(255,255,255,0.1);
-    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
+    .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,#ffd27a,#f0a84a);display:flex;align-items:center;justify-content:center;color:#7a0010;font-weight:900}
+    nav ul{display:flex;gap:14px;list-style:none}
+    nav a{padding:8px 10px;border-radius:8px;text-decoration:none;color:#fff}
+    nav a:hover{background:rgba(255,255,255,0.06)}
 
-    main{padding-top:80px; display:flex; justify-content:center;}
+    main.stage{display:flex; justify-content:center; padding-top:78px; padding-bottom:120px}
+    .paper-wrapper{position:relative;width:calc(var(--paper-width) + 80px); max-width:94vw; margin:36px 0}
+    .paper-viewport{ width:var(--paper-width); height:86vh; max-height:96vh; overflow:hidden; border-radius:10px; position:relative; background:transparent; box-shadow:0 30px 80px rgba(0,0,0,0.6);}
+    .paper{ position:absolute; left:50%; transform:translateX(-50%) translateY(0); width:var(--paper-width); background-image: url('/mnt/data/Web template.png'); background-size: cover; background-repeat:no-repeat; top:0; height: calc(100vh + var(--paper-max-translate)); will-change: transform; transition: transform 0.08s linear;}
+    .rod{ position:absolute; left:50%; top:-36px; transform-origin:center center; transform:translateX(-50%) rotate(0deg); z-index:20; pointer-events:none; width:calc(var(--paper-width) + 120px); height:120px; }
+    .rod::before, .rod::after{ content:""; position:absolute; top:12px; width:48px; height:48px; border-radius:50%; background: linear-gradient(90deg,#5a350d,#b5833b); box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+    .rod::before{ left:6px } .rod::after{ right:6px }
 
-    /* PAPER TEMPLATE */
-    .paper-wrapper{
-      width:calc(var(--paper-width) + 80px);
-      max-width:95vw;
-      margin:20px auto 100px;
-    }
-    .paper-viewport{
-      width:var(--paper-width);
-      height:88vh; max-height:92vh;
-      overflow:hidden; border-radius:10px;
-      position:relative;
-      box-shadow:0 20px 50px rgba(0,0,0,0.6);
-    }
-    .paper{
-      position:absolute;
-      top:0; left:50%; transform:translateX(-50%);
-      width:var(--paper-width);
-      height:calc(100vh + var(--paper-max-translate));
-      background-image:url("template.png");
-      background-size:cover;
-      background-repeat:no-repeat;
-      will-change:transform;
-    }
-    .rod{
-      position:absolute;
-      left:50%; top:-36px;
-      transform:translateX(-50%);
-      width:calc(var(--paper-width) + 120px);
-      height:60px;
-      pointer-events:none;
-      z-index:10;
-    }
-    .rod::before,
-    .rod::after{
-      content:"";
-      position:absolute; top:6px;
-      width:48px; height:48px;
-      background:linear-gradient(90deg,#5a350d,#b5833b);
-      border-radius:50%;
-      box-shadow:0 6px 18px rgba(0,0,0,0.5);
-    }
-    .rod::before{ left:0; }
-    .rod::after{ right:0; }
+    .content{ position:relative; z-index:10; padding: 140px 44px 140px; min-height: calc(var(--paper-max-translate) + 700px); pointer-events:auto; }
 
-    /* CONTENT ON PAPER */
-    .content{
-      position:relative;
-      z-index:20;
-      padding:150px 50px 150px;
-      pointer-events:auto;
-      min-height:1200px;
-    }
+    h1,h2,h3{ color:#522507; text-align:left; font-family: 'Georgia', serif; }
+    h1{ font-size:34px; text-align:center; margin-bottom:6px }
+    .lead{ text-align:center; color:#5e2a15; margin-bottom:20px }
 
-    h1,h2{ font-family: 'Georgia', serif; color:#522507; text-align:center; }
-    h1{ font-size:36px; margin-bottom:10px; }
-    h2{ font-size:24px; margin:20px 0 10px; }
+    /* layout */
+    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:12px; }
+    .card{ background:#fff; padding:12px; border-radius:12px; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.12); }
+    .card img{ width:120px; height:120px; object-fit:cover; border-radius:10px; }
+    .price{ color:var(--accent); font-weight:700; margin-top:8px; }
 
-    .section{
-      background:rgba(255,255,255,0.03);
-      padding:16px;
-      border-radius:10px;
-      margin:20px 0;
-    }
+    /* product detail */
+    .product-page{ display:flex; gap:18px; align-items:flex-start; margin-top:12px; }
+    .product-media{ width:340px; max-width:40%; }
+    .product-media img{ width:100%; border-radius:12px; box-shadow:0 6px 26px rgba(0,0,0,0.14) }
+    .product-info{ flex:1; background: rgba(255,255,255,0.96); padding:16px; border-radius:12px; box-shadow:0 6px 26px rgba(0,0,0,0.08); }
+    .product-info h2{ margin-bottom:8px; color:var(--accent) }
+    .qty{ display:flex; gap:8px; align-items:center; margin-top:12px; }
+    .qty button{ padding:8px 10px; border-radius:8px; border:1px solid #ddd; background:#fff; cursor:pointer }
+    .add-cart{ margin-top:14px; padding:10px 14px; background:var(--accent); color:#fff; border:none; border-radius:8px; cursor:pointer }
 
-    /* ITEMS GRID */
-    .items-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:12px;
-      margin-top:12px;
-    }
-    .card{
-      background:#fff;
-      border-radius:10px;
-      padding:12px;
-      text-align:center;
-      box-shadow:0 6px 18px rgba(0,0,0,0.15);
-    }
-    .card img{
-      width:80px;height:80px;object-fit:cover;border-radius:8px;
-    }
-    .price{color:var(--accent);font-weight:700;margin-top:6px}
+    /* cart */
+    .cart-bubble{ background:var(--accent); color:#fff; padding:6px 8px; border-radius:999px; font-weight:700; }
 
-    .combo{
-      background:#fff; padding:14px;border-radius:10px;
-      box-shadow:0 6px 20px rgba(0,0,0,0.15);
-      margin:12px 0;
-    }
+    /* order modal */
+    .modal{ position:fixed; left:0; top:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.5); z-index:2000; }
+    .modal .box{ background:#fff; padding:18px; border-radius:12px; width:min(720px,94vw); max-height:86vh; overflow:auto; }
+    .item-row{ display:flex; gap:10px; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #eee }
 
-    footer{
-      text-align:center;color:#fff;padding:30px;
-    }
+    footer{ text-align:center; color:#fff; margin-top:18px; padding-bottom:40px }
 
-    @media (max-width:600px){
-      :root{ --paper-width:360px; }
-      .content{ padding:120px 20px 100px; }
+    @media (max-width:880px){
+      .product-page{ flex-direction:column; }
+      .product-media{ max-width:100%; width:100% }
+      :root{ --paper-width:640px }
+    }
+    @media (max-width:560px){
+      :root{ --paper-width:360px }
+      .content{ padding:100px 18px 120px }
+      header nav{ display:none }
     }
   </style>
 </head>
-
 <body>
+  <header>
+    <div class="brand"><div class="logo">PS</div> POOJA STOP</div>
+    <nav>
+      <ul>
+        <li><a href="#home" id="nav-home">Home</a></li>
+        <li><a href="#catalog" id="nav-catalog">Catalog</a></li>
+        <li><a href="#combos" id="nav-combos">Combos</a></li>
+        <li><a href="#contact" id="nav-contact">Contact</a></li>
+      </ul>
+    </nav>
 
-<header>
-  <div class="brand">POOJA STOP</div>
-  <nav>
-    <ul>
-      <li><a href="#items">Items</a></li>
-      <li><a href="#combos">Combos</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="color:#fff">Cart <span id="cart-count" class="cart-bubble">0</span></div>
+      <button id="open-cart" style="padding:8px 10px;border-radius:8px;border:none;background:rgba(255,255,255,0.08);color:#fff">View</button>
+    </div>
+  </header>
 
-<main>
-  <div class="paper-wrapper">
-    <div class="paper-viewport">
-      <div class="rod" id="rod"></div>
-      <div class="paper" id="paper"></div>
+  <main class="stage">
+    <div class="paper-wrapper">
+      <div class="paper-viewport">
+        <div class="rod" id="rod"></div>
+        <div class="paper" id="paper"></div>
 
-      <div class="content">
+        <div class="content" id="content">
+          <div id="page-home">
+            <h1>POOJA STOP</h1>
+            <p class="lead">Curated pooja essentials & festival combos — authentic, fresh, delivered.</p>
 
-        <h1>POOJA STOP</h1>
-        <p style="text-align:center;margin-bottom:20px;color:#6b3915;">
-          Your one-stop shop for authentic pooja essentials.
-        </p>
+            <section id="catalog" class="section">
+              <h2>Catalog</h2>
+              <p style="color:#5e2a15">Click any item for details and to add to cart.</p>
+              <div id="product-grid" class="grid"></div>
+            </section>
 
-        <!-- ITEMS -->
-        <section id="items" class="section">
-          <h2>Pooja Items</h2>
-          <div class="items-grid">
-            <div class="card">
-              <img src="https://picsum.photos/200/200?1">
-              <div>Brass Diya</div><div class="price">₹150</div>
-            </div>
-            <div class="card">
-              <img src="https://picsum.photos/200/200?2">
-              <div>Agarbatti</div><div class="price">₹60</div>
-            </div>
-            <div class="card">
-              <img src="https://picsum.photos/200/200?3">
-              <div>Kumkum & Haldi</div><div class="price">₹40</div>
-            </div>
-            <div class="card">
-              <img src="https://picsum.photos/200/200?4">
-              <div>Flowers</div><div class="price">₹30</div>
-            </div>
-          </div>
-        </section>
+            <section id="combos" class="section">
+              <h2>Combos</h2>
+              <div id="combos-grid" style="margin-top:12px"></div>
+            </section>
 
-        <!-- COMBOS -->
-        <section id="combos" class="section">
-          <h2>Combos</h2>
-          <div class="combo">
-            <h3>Basic Combo</h3>
-            <ul>
-              <li>Diyas</li><li>Agarbattis</li><li>Kumkum</li>
-            </ul>
-            <strong>₹220</strong>
+            <section id="about" class="section">
+              <h2>About</h2>
+              <p>Pooja Stop curates high-quality items for rituals and festivals. We source from trusted vendors and ensure freshness and authenticity.</p>
+            </section>
+
+            <section id="contact" class="section">
+              <h2>Contact</h2>
+              <p>Email: hello@poojastop.example</p>
+              <p>Phone: +91 98765 43210</p>
+            </section>
+
+            <footer>© <span id="year"></span> POOJA STOP</footer>
           </div>
 
-          <div class="combo">
-            <h3>Festival Combo</h3>
-            <ul>
-              <li>Brass Plate</li><li>Flowers</li><li>Camphor</li>
-            </ul>
-            <strong>₹450</strong>
+          <!-- product detail placeholder -->
+          <div id="page-product" style="display:none">
+            <a href="#home" id="back-to-home" style="text-decoration:none;color:var(--accent);font-weight:700">← Back</a>
+            <div id="product-detail" style="margin-top:10px"></div>
           </div>
-        </section>
 
-        <!-- ABOUT -->
-        <section id="about" class="section">
-          <h2>About Us</h2>
-          <p>
-            Pooja Stop aims to make pooja preparation simple, authentic,
-            and accessible to every household. From brassware to
-            fresh flowers—we bring everything to your doorstep.
-          </p>
-        </section>
+        </div> <!-- .content -->
+      </div> <!-- .paper-viewport -->
+    </div> <!-- .paper-wrapper -->
+  </main>
 
-        <!-- CONTACT -->
-        <section id="contact" class="section">
-          <h2>Contact</h2>
-          <p>Email: hello@poojastop.com</p>
-          <p>Phone: +91 98765 43210</p>
-        </section>
+  <!-- CART MODAL -->
+  <div id="cart-modal" style="display:none" class="modal" aria-hidden="true">
+    <div class="box">
+      <h3>Your Cart</h3>
+      <div id="cart-items" style="margin-top:10px"></div>
 
-        <footer>
-          © <span id="year"></span> POOJA STOP
-        </footer>
-
+      <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
+        <button id="close-cart" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff">Close</button>
+        <button id="checkout" style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff">Checkout (Demo)</button>
       </div>
+      <div id="order-msg" style="margin-top:8px;color:var(--accent)"></div>
     </div>
   </div>
-</main>
+
+  <!-- CHECKOUT / ORDER SAVED modal -->
+  <div id="order-modal" style="display:none" class="modal" aria-hidden="true">
+    <div class="box">
+      <h3>Place Order (Demo)</h3>
+      <form id="order-form" style="display:flex;flex-direction:column;gap:10px">
+        <input name="name" placeholder="Name" required style="padding:10px;border-radius:8px;border:1px solid #ddd">
+        <input name="phone" placeholder="Phone / Email" required style="padding:10px;border-radius:8px;border:1px solid #ddd">
+        <textarea name="notes" placeholder="Delivery address / instructions" style="padding:10px;border-radius:8px;border:1px solid #ddd"></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button type="button" id="cancel-order" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;background:#fff">Cancel</button>
+          <button type="submit" style="padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff">Save Order (Local)</button>
+        </div>
+        <div id="order-result" style="color:var(--accent);margin-top:6px"></div>
+      </form>
+    </div>
+  </div>
 
 <script>
-  // PAPER SCROLL ANIMATION
-  const paper = document.getElementById('paper');
-  const rod = document.getElementById('rod');
+/* =========================
+   Data: product catalog
+   ========================= */
+const PRODUCTS = [
+  {
+    id: 'p1', title: 'Brass Diya (Small)', price: 150,
+    images: ['https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop'],
+    description: 'Traditional brass diya for daily aarti. Hand-polished, durable, and ideal for oil or ghee wicks.',
+    category: 'Utensils'
+  },
+  {
+    id: 'p2', title: 'Agarbatti (Incense) Pack', price: 60,
+    images: ['https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop'],
+    description: 'Agarbatti pack (50 sticks) with a pleasant traditional fragrance for pooja and home ambiance.',
+    category: 'Fragrance'
+  },
+  {
+    id: 'p3', title: 'Kumkum & Haldi Set', price: 40,
+    images: ['https://images.unsplash.com/photo-1541661538399-7f4e9b0f5f5e?q=80&w=800&auto=format&fit=crop'],
+    description: 'Small sealed sachets of kumkum (vermilion) and haldi (turmeric) suitable for daily rituals.',
+    category: 'Essentials'
+  },
+  {
+    id: 'p4', title: 'Fresh Marigold Garland (Single)', price: 80,
+    images: ['https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop'],
+    description: 'Fresh marigold garland for deity decoration. Sold per garland. Replace with fresh ones for festivals.',
+    category: 'Flowers'
+  },
+  {
+    id: 'p5', title: 'Camphor (Kapoor) Box', price: 25,
+    images: ['https://images.unsplash.com/photo-1593005513054-c6a5a6f4a9e7?q=80&w=800&auto=format&fit=crop'],
+    description: 'Pure camphor blocks for aarti and rituals. Burns clean and gives a traditional fragrance.',
+    category: 'Fragrance'
+  },
+  {
+    id: 'p6', title: 'Sandalwood Paste (Chandan)', price: 120,
+    images: ['https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop'],
+    description: 'Natural sandalwood paste for tilak and ceremonial usage. Comes in a sealed jar.',
+    category: 'Essentials'
+  },
+  {
+    id: 'p7', title: 'Brass Pooja Thali (Medium)', price: 450,
+    images: ['https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop'],
+    description: 'Decorative brass thali for pooja. Perfect size for small family rituals and aartis.',
+    category: 'Utensils'
+  },
+  {
+    id: 'p8', title: 'Coconut (Pooja Coconut)', price: 60,
+    images: ['https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop'],
+    description: 'Fresh coconut used for puja offerings. Sold individually; we inspect for freshness before dispatch.',
+    category: 'Offerings'
+  },
+  {
+    id: 'p9', title: 'Bell (Ghanta) Small', price: 220,
+    images: ['https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop'],
+    description: 'Small bell for daily aarti with clear resonance. Hand-polished brass finish.',
+    category: 'Accessories'
+  },
+  {
+    id: 'p10', title: 'Pooja Box (Organizer)', price: 999,
+    images: ['https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop'],
+    description: 'Compact pooja box with compartments for kumkum, haldi, diya accessories and matches.',
+    category: 'Storage'
+  }
+];
 
-  const maxTranslate = 900; 
-  const maxRotate = 12; 
+const COMBOS = [
+  { id: 'c1', title: 'Basic Pooja Combo', items: ['p1','p2','p3'], price: 250, description: 'Brass diya, agarbatti, kumkum & haldi set' },
+  { id: 'c2', title: 'Festival Combo', items: ['p1','p4','p5','p7'], price: 700, description: 'Large diya, garland, camphor, thali' },
+  { id: 'c3', title: 'Temple Ready Pack', items: ['p1','p2','p3','p4','p5','p7'], price: 1350, description: 'Everything needed for larger rituals' }
+];
 
-  window.addEventListener('scroll', () => {
-    const height = document.documentElement.scrollHeight - innerHeight;
-    const progress = scrollY / height;
+/* ============================
+   UI: render product grid
+   ============================ */
+const gridEl = document.getElementById('product-grid');
+const combosGrid = document.getElementById('combos-grid');
+const cartCountEl = document.getElementById('cart-count');
 
-    const translate = progress * maxTranslate;
-    const rotate = progress * maxRotate;
+function formatPrice(n){ return '₹ ' + n; }
 
-    paper.style.transform = `translateX(-50%) translateY(-${translate}px)`;
-    rod.style.transform = `translateX(-50%) rotate(${rotate}deg)`;
+function renderCatalog(){
+  gridEl.innerHTML = '';
+  PRODUCTS.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.images[0]}" alt="${p.title}">
+      <div style="font-weight:700;margin-top:8px">${p.title}</div>
+      <div class="price">${formatPrice(p.price)}</div>
+      <div style="margin-top:8px">
+        <a href="#product-${p.id}" data-id="${p.id}" class="view-btn" style="text-decoration:none;padding:8px 10px;border-radius:8px;background:linear-gradient(90deg,#ffd27a,#f0a84a);color:#7a0010">View</a>
+      </div>
+    `;
+    gridEl.appendChild(card);
+  });
+}
+
+function renderCombos(){
+  combosGrid.innerHTML = '';
+  COMBOS.forEach(c=>{
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.style.textAlign = 'left';
+    el.innerHTML = `<div style="font-weight:800">${c.title}</div>
+      <div style="margin:6px 0;color:#5e2a15">${c.description}</div>
+      <div style="font-weight:700;color:var(--accent)">${formatPrice(c.price)}</div>
+      <div style="margin-top:8px"><button data-id="${c.id}" class="combo-btn" style="padding:8px 10px;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer">Order Combo</button></div>`;
+    combosGrid.appendChild(el);
+  });
+}
+
+/* ============================
+   Routing: hash -> product detail
+   ============================ */
+const pageHome = document.getElementById('page-home');
+const pageProduct = document.getElementById('page-product');
+const productDetailHolder = document.getElementById('product-detail');
+
+function showHome(){
+  pageProduct.style.display = 'none';
+  pageHome.style.display = 'block';
+  document.getElementById('nav-catalog').classList.remove('active');
+}
+
+function showProduct(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  if(!p){ showHome(); return; }
+
+  pageHome.style.display = 'none';
+  pageProduct.style.display = 'block';
+  productDetailHolder.innerHTML = '';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'product-page';
+
+  const media = document.createElement('div');
+  media.className = 'product-media';
+  media.innerHTML = `<img src="${p.images[0]}" alt="${p.title}">`;
+
+  const info = document.createElement('div');
+  info.className = 'product-info';
+  info.innerHTML = `<h2>${p.title}</h2>
+    <div style="font-weight:700;color:var(--accent)">${formatPrice(p.price)}</div>
+    <p style="margin-top:8px">${p.description}</p>
+    <div class="qty">
+      <label>Qty:</label>
+      <button data-action="decrease">-</button>
+      <input type="number" min="1" value="1" id="qty-input" style="width:60px;padding:6px;border-radius:6px;border:1px solid #ddd">
+    </div>
+    <button class="add-cart" data-id="${p.id}">Add to Cart</button>
+    <div style="margin-top:8px"><a href="#combos" style="text-decoration:none;color:#6b2a14">View combos</a></div>`;
+
+  wrapper.appendChild(media);
+  wrapper.appendChild(info);
+  productDetailHolder.appendChild(wrapper);
+
+  // attach add to cart handler:
+  const addBtn = info.querySelector('.add-cart');
+  addBtn.addEventListener('click', ()=>{
+    const qty = Math.max(1, parseInt(document.getElementById('qty-input').value || '1'));
+    addToCart(p.id, qty);
+    alert(`${qty} × ${p.title} added to cart (demo).`);
+  });
+}
+
+/* ============================
+   Cart (localStorage)
+   ============================ */
+function getCart(){
+  try{
+    return JSON.parse(localStorage.getItem('pooja_cart') || '[]');
+  } catch(e){ return []; }
+}
+function saveCart(c){ localStorage.setItem('pooja_cart', JSON.stringify(c)); updateCartCount(); }
+function updateCartCount(){
+  const c = getCart();
+  const total = c.reduce((s,i)=>s+i.qty,0);
+  cartCountEl.textContent = total;
+}
+function addToCart(productId, qty=1){
+  const cart = getCart();
+  const existing = cart.find(i=>i.id===productId);
+  if(existing) existing.qty += qty;
+  else cart.push({ id: productId, qty });
+  saveCart(cart);
+}
+function removeFromCart(productId){
+  const cart = getCart().filter(i=>i.id!==productId);
+  saveCart(cart);
+}
+function clearCart(){ localStorage.removeItem('pooja_cart'); updateCartCount(); }
+
+/* ============================
+   Render cart modal
+   ============================ */
+const cartModal = document.getElementById('cart-modal');
+const cartItemsHolder = document.getElementById('cart-items');
+const openCartBtn = document.getElementById('open-cart');
+const closeCartBtn = document.getElementById('close-cart');
+const checkoutBtn = document.getElementById('checkout');
+
+function renderCartModal(){
+  const cart = getCart();
+  cartItemsHolder.innerHTML = '';
+  if(cart.length === 0){
+    cartItemsHolder.innerHTML = '<p>No items in cart.</p>';
+    return;
+  }
+  cart.forEach(entry=>{
+    const prod = PRODUCTS.find(p=>p.id === entry.id);
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div style="display:flex;gap:12px;align-items:center">
+        <img src="${prod.images[0]}" style="width:64px;height:64px;border-radius:8px;object-fit:cover">
+        <div>
+          <div style="font-weight:700">${prod.title}</div>
+          <div style="color:#666">${formatPrice(prod.price)} × ${entry.qty}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button data-remove="${entry.id}" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button>
+      </div>
+    `;
+    cartItemsHolder.appendChild(row);
   });
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+  // remove handlers
+  cartItemsHolder.querySelectorAll('[data-remove]').forEach(btn=>{
+    btn.addEventListener('click', (ev)=> {
+      const pid = ev.currentTarget.getAttribute('data-remove');
+      removeFromCart(pid);
+      renderCartModal();
+    });
+  });
+}
+
+openCartBtn.addEventListener('click', ()=>{
+  renderCartModal();
+  cartModal.style.display = 'flex';
+});
+closeCartBtn.addEventListener('click', ()=> cartModal.style.display = 'none');
+
+/* Checkout -> open order modal */
+checkoutBtn.addEventListener('click', ()=>{
+  cartModal.style.display = 'none';
+  document.getElementById('order-modal').style.display = 'flex';
+});
+
+/* ============================
+   Order saving (demo): saves to localStorage "pooja_orders"
+   ============================ */
+const orderModal = document.getElementById('order-modal');
+const orderForm = document.getElementById('order-form');
+const cancelOrderBtn = document.getElementById('cancel-order');
+const orderResult = document.getElementById('order-result');
+
+cancelOrderBtn.addEventListener('click', ()=> orderModal.style.display = 'none');
+
+orderForm.addEventListener('submit', (ev)=>{
+  ev.preventDefault();
+  const cart = getCart();
+  if(cart.length === 0){ orderResult.textContent = 'Cart is empty.'; return; }
+
+  const payload = {
+    ts: new Date().toISOString(),
+    name: orderForm.name.value,
+    contact: orderForm.phone.value,
+    notes: orderForm.notes.value,
+    items: cart
+  };
+
+  const orders = JSON.parse(localStorage.getItem('pooja_orders') || '[]');
+  orders.push(payload);
+  localStorage.setItem('pooja_orders', JSON.stringify(orders));
+
+  orderResult.textContent = 'Order saved locally (demo). Use a real backend to accept orders.';
+  clearCart();
+  setTimeout(()=> { orderModal.style.display = 'none'; orderResult.textContent = ''; }, 1400);
+});
+
+/* ============================
+   Combos ordering (demo)
+   ============================ */
+document.addEventListener('click', (ev)=>{
+  if(ev.target.matches('.combo-btn')){
+    const cid = ev.target.getAttribute('data-id');
+    const c = COMBOS.find(x=>x.id===cid);
+    if(!c) return;
+    // add combo as separate cart item (id=combo-<id>)
+    addToCartCombo(c.id, 1);
+    alert(`${c.title} added to cart (demo).`);
+  }
+});
+
+function addToCartCombo(comboId, qty=1){
+  // for demo, store combo entries as id 'combo-{id}'
+  const id = `combo-${comboId}`;
+  const cart = getCart();
+  const existing = cart.find(i=>i.id===id);
+  if(existing) existing.qty += qty;
+  else cart.push({ id, qty });
+  saveCart(cart);
+}
+
+/* When cart contains combo- entries, display them nicely */
+function renderCartModal(){
+  const cart = getCart();
+  cartItemsHolder.innerHTML = '';
+  if(cart.length === 0){
+    cartItemsHolder.innerHTML = '<p>No items in cart.</p>';
+    return;
+  }
+  cart.forEach(entry=>{
+    let row = document.createElement('div');
+    row.className = 'item-row';
+    if(entry.id.startsWith('combo-')){
+      const cid = entry.id.replace('combo-','');
+      const combo = COMBOS.find(c=>c.id===cid);
+      row.innerHTML = `<div style="font-weight:700">${combo.title}</div><div style="color:#666">${formatPrice(combo.price)} × ${entry.qty}</div>
+        <div style="margin-left:auto"><button data-remove="${entry.id}" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button></div>`;
+    } else {
+      const prod = PRODUCTS.find(p=>p.id === entry.id);
+      row.innerHTML = `
+      <div style="display:flex;gap:12px;align-items:center">
+        <img src="${prod.images[0]}" style="width:64px;height:64px;border-radius:8px;object-fit:cover">
+        <div>
+          <div style="font-weight:700">${prod.title}</div>
+          <div style="color:#666">${formatPrice(prod.price)} × ${entry.qty}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button data-remove="${entry.id}" style="padding:6px 8px;border-radius:8px;border:1px solid #ddd;background:#fff">Remove</button>
+      </div>
+      `;
+    }
+    cartItemsHolder.appendChild(row);
+  });
+
+  cartItemsHolder.querySelectorAll('[data-remove]').forEach(btn=>{
+    btn.addEventListener('click', (ev)=> {
+      const pid = ev.currentTarget.getAttribute('data-remove');
+      removeFromCart(pid);
+      renderCartModal();
+    });
+  });
+}
+
+/* ============================
+   Navigation / hashchange
+   ============================ */
+function handleHash(){
+  const h = location.hash || '#home';
+  if(h.startsWith('#product-')){
+    const id = h.replace('#product-','');
+    showProduct(id);
+  } else {
+    showHome();
+    // smooth scroll to anchors within content:
+    if(h && h !== '#home'){
+      const elId = h.replace('#','');
+      // find element inside content and scroll to it
+      setTimeout(()=> {
+        const el = document.getElementById(elId);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 120);
+    } else {
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  }
+}
+
+window.addEventListener('hashchange', handleHash);
+window.addEventListener('load', ()=>{
+  renderCatalog();
+  renderCombos();
+  updateCartCount();
+  handleHash();
+  document.getElementById('year').textContent = new Date().getFullYear();
+});
+
+/* click-to product grid links (delegation) */
+document.addEventListener('click', (ev)=>{
+  if(ev.target.matches('.view-btn')){
+    ev.preventDefault();
+    const id = ev.target.getAttribute('data-id');
+    location.hash = `#product-${id}`;
+  }
+});
+
+/* ============================
+   Paper roll effect (visual)
+   ============================ */
+(function(){
+  const paper = document.getElementById('paper');
+  const rod = document.getElementById('rod');
+  const maxTranslate = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--paper-max-translate')) || 980;
+  const maxRod = 12;
+  function updateOnScroll(){
+    const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollRatio = pageHeight > 0 ? (window.scrollY / pageHeight) : 0;
+    const translateY = Math.min(maxTranslate, Math.round(scrollRatio * maxTranslate));
+    const rodAngle = (scrollRatio * maxRod);
+    paper.style.transform = `translateX(-50%) translateY(${-translateY}px)`;
+    rod.style.transform = `translateX(-50%) rotate(${rodAngle}deg)`;
+  }
+  window.addEventListener('scroll', updateOnScroll, {passive:true});
+  window.addEventListener('resize', updateOnScroll);
+  updateOnScroll();
+})();
+
+/* ============================
+   Utility: reveal product if direct URL with query param ?product=
+   ============================ */
+(function(){
+  const params = new URLSearchParams(location.search);
+  if(params.has('product')){
+    const id = params.get('product');
+    location.hash = `#product-${id}`;
+  }
+})();
+
+/* ============================
+   Small helpers: keyboard shortcuts for demo
+   ============================ */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'c' && (e.ctrlKey || e.metaKey)){
+    // Ctrl/Cmd + C opens cart (demo)
+    openCartBtn.click();
+  }
+});
 </script>
 
 </body>
