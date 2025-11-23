@@ -25,7 +25,7 @@
     line-height:1.35;
   }
 
-  /* Smooth animations */
+  /* Animations */
   @keyframes fadeIn{
     from{opacity:0;transform:translateY(10px)}
     to{opacity:1;transform:translateY(0)}
@@ -33,10 +33,6 @@
   @keyframes slideIn{
     from{transform:translateX(-20px);opacity:0}
     to{transform:translateX(0);opacity:1}
-  }
-  @keyframes scaleIn{
-    from{transform:scale(0.9);opacity:0}
-    to{transform:scale(1);opacity:1}
   }
 
   /* Header */
@@ -46,7 +42,6 @@
     background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
     border-bottom: 1px solid rgba(0,0,0,0.06);
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
   }
   .topbar{
     max-width:var(--max-width);
@@ -61,14 +56,18 @@
   .brand:hover{transform:scale(1.02)}
   .brand .logo{
     width:44px; height:44px; border-radius:12px;
-    background: linear-gradient(135deg, var(--primary), #b83c1a);
+    background-image: url('/mnt/data/Web template.png');
+    background-size: cover;
+    background-position: center;
     box-shadow: 0 6px 18px rgba(138,43,10,0.3);
     display:flex; align-items:center; justify-content:center;
     font-weight:900; color:#fff; font-size:20px;
-    transition: all 0.3s ease;
   }
-  .brand:hover .logo{transform:rotate(5deg);box-shadow: 0 8px 24px rgba(138,43,10,0.4)}
   .brand h1{ font-size:18px; color:var(--muted); letter-spacing:1px; margin:0 }
+  .delivery-badge{
+    display:flex; align-items:center; gap:6px;
+    font-size:13px; font-weight:700; color:var(--primary);
+  }
   
   .search-area{
     flex:1; display:flex; align-items:center; gap:12px; margin-left:8px;
@@ -86,19 +85,12 @@
   .search-box input{
     border:0; outline:none; font-size:15px; width:100%;
   }
-  .search-box select{
-    border:0;background:transparent;outline:none;cursor:pointer;
-    padding:4px 8px;border-radius:6px;
-    transition:background 0.2s ease;
-  }
-  .search-box select:hover{background:rgba(0,0,0,0.03)}
   
   .actions{ display:flex; gap:10px; align-items:center }
   .action-btn{
     padding:8px 12px; border-radius:10px; background:transparent;
     border:1px solid rgba(0,0,0,0.08); cursor:pointer;
-    transition: all 0.2s ease;
-    font-weight:500;
+    transition: all 0.2s ease; font-weight:500;
   }
   .action-btn:hover{
     background:var(--primary);color:#fff;
@@ -108,287 +100,411 @@
 
   .wrap{
     max-width:var(--max-width);
-    margin:18px auto;
+    margin:0 auto;
     padding:0 18px;
   }
 
-  /* Categories */
-  .categories{
-    display:flex; gap:10px; overflow:auto; padding:12px 6px; margin-bottom:12px;
-    animation: slideIn 0.4s ease;
+  /* Section Headers */
+  .section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:24px 0 16px 0;
   }
-  .categories::-webkit-scrollbar{height:6px}
-  .categories::-webkit-scrollbar-track{background:transparent}
-  .categories::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:10px}
-  
-  .chip{
-    flex:0 0 auto; padding:10px 16px; border-radius:24px; background:var(--card-bg);
-    border:1px solid rgba(0,0,0,0.06); cursor:pointer; font-weight:600; color:var(--muted);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    user-select:none;
-  }
-  .chip:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 24px rgba(0,0,0,0.12);
-  }
-  .chip.active{
-    background: linear-gradient(90deg,var(--accent), #f6c86a);
-    color:#6b2b0b;
-    box-shadow:0 10px 30px rgba(255,210,122,0.4);
-    transform:translateY(-2px);
-  }
-
-  /* Layout */
-  .layout{
-    display:grid;
-    grid-template-columns: 1fr 340px;
-    gap:20px;
-    align-items:start;
-  }
-
-  /* Listing */
-  .listing{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-    gap:18px;
-  }
-  .vendor{
-    background:var(--card-bg);
-    border-radius:16px;
-    padding:0;
-    box-shadow:var(--shadow);
-    border: 1px solid rgba(0,0,0,0.04);
-    overflow:hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: fadeIn 0.4s ease;
-    cursor:pointer;
-    position:relative;
-  }
-  .vendor::before{
-    content:'';
-    position:absolute;
-    top:0;left:0;right:0;bottom:0;
-    background:linear-gradient(135deg, transparent, rgba(255,210,122,0.1));
-    opacity:0;
-    transition:opacity 0.3s ease;
-    pointer-events:none;
-  }
-  .vendor:hover{
-    transform:translateY(-6px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.15);
-  }
-  .vendor:hover::before{opacity:1}
-  
-  .vendor .thumb{
-    width:100%; height:180px; background:#eee; overflow:hidden;
-    position:relative;
-  }
-  .vendor .thumb img{
-    width:100%; height:100%; object-fit:cover; display:block;
-    transition: transform 0.4s ease;
-  }
-  .vendor:hover .thumb img{transform:scale(1.08)}
-  
-  .vendor .thumb .quick-badge{
-    position:absolute;
-    top:12px;right:12px;
-    background:rgba(255,255,255,0.95);
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:12px;
+  .section-header h2{
+    font-size:24px;
+    color:var(--muted);
     font-weight:700;
+  }
+  .see-all{
     color:var(--primary);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    backdrop-filter:blur(4px);
-  }
-  
-  .vendor .meta{
-    padding:14px;
-  }
-  .vendor h3{
-    margin:0 0 8px 0;
-    font-size:17px;
-    color:var(--muted);
-    font-weight:700;
-  }
-  .vendor .tags{
-    font-size:13px;
-    color:#6b6b6b;
-    margin-bottom:10px;
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
-  }
-  .vendor .tag-item{
-    background:rgba(138,43,10,0.08);
-    padding:3px 8px;
-    border-radius:12px;
-    font-size:11px;
     font-weight:600;
-  }
-  .vendor .info{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    font-size:13px;
-    color:#444;
-    margin-top:8px;
-    margin-bottom:12px;
-  }
-  .rating{
-    display:flex;
-    align-items:center;
-    gap:4px;
-    font-weight:600;
-  }
-  .price-badge{
-    margin-left:auto;
-    background: linear-gradient(180deg,var(--accent), #f0b85a);
-    padding:8px 12px;
-    border-radius:10px;
-    font-weight:700;
-    font-size:16px;
-    color:#6b2b0b;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  }
-
-  .vendor .cta {
-    display:flex;
-    gap:8px;
-  }
-  .btn-add{
-    flex:1;
-    padding:10px 16px;
-    border-radius:10px;
-    border:none;
-    background:var(--primary);
-    color:#fff;
     cursor:pointer;
-    font-weight:600;
-    transition: all 0.2s ease;
-    position:relative;
-    overflow:hidden;
-  }
-  .btn-add::before{
-    content:'';
-    position:absolute;
-    top:50%;left:50%;
-    width:0;height:0;
-    border-radius:50%;
-    background:rgba(255,255,255,0.3);
-    transform:translate(-50%,-50%);
-    transition:width 0.4s ease, height 0.4s ease;
-  }
-  .btn-add:hover::before{width:300px;height:300px}
-  .btn-add:hover{
-    background:#6b2b0b;
-    transform:translateY(-2px);
-    box-shadow:0 8px 16px rgba(138,43,10,0.3);
-  }
-  .btn-add:active{transform:translateY(0)}
-  
-  .btn-view{
-    padding:10px 16px;
-    border-radius:10px;
-    border:1px solid rgba(0,0,0,0.1);
-    background:#fff;
-    cursor:pointer;
+    font-size:15px;
     transition:all 0.2s ease;
-    font-weight:500;
   }
-  .btn-view:hover{
-    background:#f5f5f5;
-    border-color:var(--primary);
+  .see-all:hover{
+    text-decoration:underline;
+    transform:translateX(3px);
   }
 
-  /* Cart Panel */
-  .cart-panel{
-    position:sticky;
-    top:92px;
-    background:linear-gradient(180deg, #fff, #fefcfa);
-    border-radius:16px;
-    padding:16px;
-    box-shadow:var(--shadow);
+  /* Quick Picks - Horizontal Scroll */
+  .quick-picks{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    padding:12px 0 20px 0;
+    scroll-snap-type: x mandatory;
+    animation: fadeIn 0.4s ease;
+  }
+  .quick-picks::-webkit-scrollbar{height:8px}
+  .quick-picks::-webkit-scrollbar-track{background:rgba(0,0,0,0.03);border-radius:10px}
+  .quick-picks::-webkit-scrollbar-thumb{background:rgba(138,43,10,0.3);border-radius:10px}
+  
+  .quick-item{
+    flex:0 0 160px;
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
     border:1px solid rgba(0,0,0,0.04);
-    height:fit-content;
-    animation: scaleIn 0.4s ease;
+    scroll-snap-align:start;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    position:relative;
   }
-  .cart-panel h4{
-    margin:0 0 12px 0;
-    color:var(--muted);
-    font-size:18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+  .quick-item:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 24px rgba(0,0,0,0.12);
   }
-  #cartCount{
-    background:var(--primary);
+  .quick-item .discount-badge{
+    position:absolute;
+    top:8px;
+    left:8px;
+    background:#16a34a;
     color:#fff;
-    padding:4px 10px;
-    border-radius:12px;
-    font-size:14px;
-  }
-  
-  .cart-items{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    max-height:400px;
-    overflow:auto;
-    padding-right:6px;
-    margin-bottom:12px;
-  }
-  .cart-items::-webkit-scrollbar{width:6px}
-  .cart-items::-webkit-scrollbar-track{background:transparent}
-  .cart-items::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:10px}
-  
-  .cart-row{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px;
-    border-radius:12px;
-    background:#faf7f4;
-    border:1px solid rgba(0,0,0,0.03);
-    transition:all 0.2s ease;
-    animation:slideIn 0.3s ease;
-  }
-  .cart-row:hover{
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    transform:translateX(2px);
-  }
-  .cart-row .left{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    flex:1;
-  }
-  .cart-row img{
-    width:54px;
-    height:54px;
-    border-radius:8px;
-    object-fit:cover;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  }
-  .qty-control{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-top:4px;
-  }
-  .qty-btn{
-    width:24px;
-    height:24px;
+    padding:4px 8px;
     border-radius:6px;
-    border:1px solid rgba(0,0,0,0.1);
+    font-size:11px;
+    font-weight:700;
+  }
+  .quick-item img{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:10px;
+  }
+  .quick-item .duration{
+    font-size:11px;
+    color:#666;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .quick-item h3{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:4px;
+    color:#222;
+    line-height:1.3;
+  }
+  .quick-item .size{
+    font-size:12px;
+    color:#666;
+    margin-bottom:8px;
+  }
+  .quick-item .price-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:10px;
+  }
+  .quick-item .price{
+    font-size:16px;
+    font-weight:700;
+    color:#222;
+  }
+  .quick-item .old-price{
+    font-size:13px;
+    color:#999;
+    text-decoration:line-through;
+  }
+  .quick-item .add-btn{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    border:2px solid var(--primary);
     background:#fff;
+    color:var(--primary);
+    font-size:20px;
+    font-weight:700;
     cursor:pointer;
     display:flex;
     align-items:center;
     justify-content:center;
+    position:absolute;
+    bottom:12px;
+    right:12px;
+    transition:all 0.2s ease;
+  }
+  .quick-item .add-btn:hover{
+    background:var(--primary);
+    color:#fff;
+  }
+
+  /* Spotlight Categories */
+  .spotlight{
+    margin:30px 0;
+  }
+  .spotlight-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+    gap:14px;
+    padding:12px 0;
+  }
+  .spotlight-card{
+    background:#fff;
+    border-radius:12px;
+    padding:16px 12px;
+    text-align:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    border:1px solid rgba(0,0,0,0.04);
+    cursor:pointer;
+    transition:all 0.3s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .spotlight-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:4px;
+    background:linear-gradient(90deg, var(--accent), #f6c86a);
+    transform:scaleX(0);
+    transition:transform 0.3s ease;
+  }
+  .spotlight-card:hover::before{
+    transform:scaleX(1);
+  }
+  .spotlight-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 24px rgba(0,0,0,0.12);
+  }
+  .spotlight-card .badge{
+    display:inline-block;
+    font-size:10px;
+    font-weight:700;
+    padding:4px 8px;
+    border-radius:6px;
+    margin-bottom:10px;
+    text-transform:uppercase;
+  }
+  .spotlight-card .badge.clearance{
+    background:#fef3c7;
+    color:#92400e;
+  }
+  .spotlight-card .badge.featured{
+    background:#dbeafe;
+    color:#1e40af;
+  }
+  .spotlight-card .badge.focus{
+    background:#f3e8ff;
+    color:#6b21a8;
+  }
+  .spotlight-card img{
+    width:100%;
+    height:100px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:10px;
+  }
+  .spotlight-card h3{
     font-size:14px;
+    font-weight:700;
+    color:var(--muted);
+    margin-bottom:4px;
+  }
+  .spotlight-card p{
+    font-size:12px;
+    color:#666;
+  }
+
+  /* Browse All Section */
+  .browse-all{
+    margin:40px 0 30px 0;
+  }
+  .listing{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+    gap:16px;
+  }
+  .product-card{
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    border:1px solid rgba(0,0,0,0.04);
+    transition:all 0.3s ease;
+    cursor:pointer;
+    position:relative;
+  }
+  .product-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 24px rgba(0,0,0,0.12);
+  }
+  .product-card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:10px;
+  }
+  .product-card .eta{
+    font-size:11px;
+    color:#666;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .product-card h3{
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:4px;
+    color:#222;
+    line-height:1.3;
+  }
+  .product-card .tags{
+    font-size:11px;
+    color:#999;
+    margin-bottom:8px;
+  }
+  .product-card .bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+  }
+  .product-card .price{
+    font-size:17px;
+    font-weight:700;
+    color:#222;
+  }
+  .product-card .rating{
+    font-size:12px;
+    font-weight:600;
+  }
+  .product-card .add-btn{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    border:2px solid var(--primary);
+    background:#fff;
+    color:var(--primary);
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all 0.2s ease;
+  }
+  .product-card .add-btn:hover{
+    background:var(--primary);
+    color:#fff;
+  }
+
+  /* Fixed Cart Button */
+  .cart-float{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:var(--primary);
+    color:#fff;
+    padding:14px 24px;
+    border-radius:50px;
+    box-shadow:0 12px 30px rgba(138,43,10,0.3);
+    cursor:pointer;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    z-index:1100;
+    transition:all 0.3s ease;
+  }
+  .cart-float:hover{
+    transform:translateY(-3px);
+    box-shadow:0 16px 40px rgba(138,43,10,0.4);
+  }
+  .cart-float .count{
+    background:rgba(255,255,255,0.3);
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:14px;
+  }
+
+  /* Modal */
+  .modal{
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.6);
+    z-index:2000;
+    align-items:center;
+    justify-content:center;
+    backdrop-filter:blur(4px);
+  }
+  .modal.show{display:flex}
+  .modal-content{
+    background:#fff;
+    border-radius:16px;
+    padding:24px;
+    max-width:500px;
+    width:90%;
+    max-height:80vh;
+    overflow:auto;
+    box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+  }
+  .modal-header h3{
+    font-size:22px;
+    color:var(--muted);
+  }
+  .close-btn{
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    border:none;
+    background:#f5f5f5;
+    cursor:pointer;
+    font-size:20px;
+    transition:all 0.2s ease;
+  }
+  .close-btn:hover{
+    background:#e5e5e5;
+  }
+  .cart-items{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:20px;
+  }
+  .cart-row{
+    display:flex;
+    gap:12px;
+    padding:12px;
+    border-radius:10px;
+    background:#faf7f4;
+    border:1px solid rgba(0,0,0,0.05);
+  }
+  .cart-row img{
+    width:70px;
+    height:70px;
+    border-radius:8px;
+    object-fit:cover;
+  }
+  .cart-row-info{
+    flex:1;
+  }
+  .cart-row h4{
+    font-size:15px;
+    margin-bottom:4px;
+  }
+  .cart-row .qty-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
+  }
+  .qty-btn{
+    width:28px;
+    height:28px;
+    border-radius:6px;
+    border:1px solid #ddd;
+    background:#fff;
+    cursor:pointer;
     font-weight:700;
     transition:all 0.2s ease;
   }
@@ -397,96 +513,32 @@
     color:#fff;
     border-color:var(--primary);
   }
-  .qty-btn:active{transform:scale(0.9)}
-  
-  .cart-summary{
-    margin-top:12px;
-    padding-top:12px;
+  .cart-total{
+    padding:20px 0;
     border-top:2px solid rgba(0,0,0,0.06);
-    font-weight:700;
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    font-size:18px;
+    font-size:20px;
+    font-weight:700;
   }
-  .checkout{
-    margin-top:12px;
+  .checkout-btn{
+    width:100%;
     padding:14px;
     border-radius:12px;
+    border:none;
     background:linear-gradient(90deg,var(--accent), #f0b85a);
     color:#6b2b0b;
     font-weight:700;
-    border:none;
-    cursor:pointer;
-    width:100%;
     font-size:16px;
+    cursor:pointer;
     transition:all 0.3s ease;
-    position:relative;
-    overflow:hidden;
   }
-  .checkout::before{
-    content:'';
-    position:absolute;
-    top:50%;left:50%;
-    width:0;height:0;
-    border-radius:50%;
-    background:rgba(255,255,255,0.4);
-    transform:translate(-50%,-50%);
-    transition:width 0.4s ease, height 0.4s ease;
-  }
-  .checkout:hover::before{width:400px;height:400px}
-  .checkout:hover{
+  .checkout-btn:hover{
     transform:translateY(-2px);
-    box-shadow:0 12px 24px rgba(255,210,122,0.4);
-  }
-  .checkout:active{transform:translateY(0)}
-  .checkout:disabled{
-    opacity:0.5;
-    cursor:not-allowed;
+    box-shadow:0 8px 20px rgba(255,210,122,0.4);
   }
 
-  /* Empty state */
-  .empty-state{
-    text-align:center;
-    padding:40px 20px;
-    color:#999;
-  }
-  .empty-state svg{
-    width:80px;
-    height:80px;
-    margin-bottom:16px;
-    opacity:0.3;
-  }
-
-  /* Mobile adjustments */
-  @media (max-width:980px){
-    .layout{ grid-template-columns: 1fr; }
-    .cart-panel{
-      position:fixed;
-      right:10px;
-      bottom:10px;
-      width:92%;
-      max-width:420px;
-      z-index:1300;
-      max-height:70vh;
-      overflow:auto;
-    }
-  }
-
-  @media (max-width:560px){
-    .topbar{ padding:10px; flex-wrap:wrap }
-    .brand h1{ font-size:16px }
-    .search-area{ min-width:100%; order:3 }
-    .listing{ grid-template-columns: 1fr }
-    .vendor .thumb{ height:160px }
-  }
-
-  /* Utilities */
-  .muted{ color:#6b6b6b; font-size:13px }
-  .small{ font-size:13px; color:#555 }
-  .center{ text-align:center }
-  
-  /* Notification toast */
+  /* Toast */
   .toast{
     position:fixed;
     bottom:20px;
@@ -506,212 +558,322 @@
     transform:translateX(-50%) translateY(0);
     opacity:1;
   }
+
+  /* Mobile */
+  @media (max-width:768px){
+    .topbar{padding:10px;flex-wrap:wrap}
+    .search-area{width:100%;order:3;margin-top:10px;margin-left:0}
+    .quick-item{flex:0 0 140px}
+    .spotlight-grid{grid-template-columns:repeat(auto-fit, minmax(120px, 1fr))}
+    .listing{grid-template-columns:repeat(2, 1fr)}
+  }
 </style>
 </head>
 <body>
 
 <header class="site-head">
   <div class="topbar">
-    <div class="brand" onclick="location.reload()">
-      <div class="logo">PS</div>
+    <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="logo" title="POOJA STOP">PS</div>
       <div>
         <h1>POOJA STOP</h1>
-        <div class="small muted">Pooja essentials & combos</div>
+        <div class="delivery-badge">⚡ 11 MINS delivery</div>
       </div>
     </div>
 
     <div class="search-area">
       <div class="search-box">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#b96b2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#b96b2b" stroke-width="2"/></svg>
-        <input id="search-input" placeholder="Search items, combos, or rituals..."/>
-        <select id="sort">
-          <option value="popular">Popular</option>
-          <option value="price_low">Price: Low</option>
-          <option value="price_high">Price: High</option>
-        </select>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#b96b2b" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="6" stroke="#b96b2b" stroke-width="2"/></svg>
+        <input id="search-input" placeholder="Search for pooja items..."/>
       </div>
     </div>
 
     <div class="actions">
-      <button class="action-btn" id="saved">❤️ Saved</button>
-      <button class="action-btn" id="account">👤 Sign in</button>
+      <button class="action-btn">❤️ Saved</button>
+      <button class="action-btn">👤 Sign in</button>
     </div>
   </div>
 </header>
 
 <main class="wrap">
-  <div class="categories" id="categories"></div>
+  <!-- Quick Picks Section -->
+  <div class="section-header">
+    <h2>Hey there, your quick picks</h2>
+    <span class="see-all" onclick="scrollToAll()">See All →</span>
+  </div>
+  
+  <div class="quick-picks" id="quickPicks"></div>
 
-  <div class="layout">
-    <div>
-      <div class="listing" id="listing"></div>
+  <!-- Spotlight Section -->
+  <div class="spotlight">
+    <div class="section-header">
+      <h2>In the Spotlight</h2>
     </div>
+    <div class="spotlight-grid" id="spotlight"></div>
+  </div>
 
-    <aside class="cart-panel" id="cartPanel">
-      <h4>
-        <span>🛒 Your Cart</span>
-        <span id="cartCount">0</span>
-      </h4>
-      <div class="cart-items" id="cartItems">
-        <div class="center muted empty-state">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-          <div>No items yet</div>
-          <div class="small">Add from the list</div>
-        </div>
-      </div>
-      <div class="cart-summary">
-        <span>Total</span><span id="cartTotal">₹ 0</span>
-      </div>
-      <button class="checkout" id="checkoutBtn">Place Order</button>
-    </aside>
+  <!-- Browse All -->
+  <div class="browse-all" id="browseSection">
+    <div class="section-header">
+      <h2>Browse All Items</h2>
+    </div>
+    <div class="listing" id="listing"></div>
   </div>
 </main>
+
+<!-- Floating Cart -->
+<div class="cart-float" id="cartFloat" onclick="openCart()">
+  🛒 Cart <span class="count" id="cartCountFloat">0</span>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal" id="cartModal" onclick="closeCart(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Your Cart</h3>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">₹ 0</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Place Order</button>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
+// ---------- Data ----------
 const DATA = [
-  { id:'v1', name:'Brass Diya — Small', tags:['Diya','Brass'], eta:'10-15 min', rating:4.8, price:150, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
-  { id:'v2', name:'Agarbatti Pack (50)', tags:['Incense'], eta:'5-10 min', rating:4.6, price:60, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
-  { id:'v3', name:'Kumkum & Haldi Set', tags:['Essentials'], eta:'5-10 min', rating:4.7, price:40, img:'https://images.unsplash.com/photo-1541661538399-7f4e9b0f5f5e?q=80&w=800&auto=format&fit=crop' },
-  { id:'v4', name:'Fresh Marigold Garland', tags:['Flowers'], eta:'20-30 min', rating:4.5, price:80, img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
-  { id:'v5', name:'Camphor Box (Kapoor)', tags:['Camphor'], eta:'5-10 min', rating:4.6, price:25, img:'https://images.unsplash.com/photo-1593005513054-c6a5a6f4a9e7?q=80&w=800&auto=format&fit=crop' },
-  { id:'v6', name:'Sandalwood Paste (Chandan)', tags:['Chandan'], eta:'5-10 min', rating:4.9, price:120, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
-  { id:'v7', name:'Brass Thali (Medium)', tags:['Plate','Brass'], eta:'20-30 min', rating:4.4, price:450, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
-  { id:'v8', name:'Pooja Coconut (Fresh)', tags:['Offerings'], eta:'5-15 min', rating:4.3, price:60, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
-  { id:'v9', name:'Small Ghanta (Bell)', tags:['Accessories'], eta:'5-15 min', rating:4.6, price:220, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
-  { id:'v10', name:'Pooja Organizer Box', tags:['Storage'], eta:'3-7 days', rating:4.7, price:999, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
-  { id:'v11', name:'Festival Combo (Diya+Garland+Camphor)', tags:['Combo','Festival'], eta:'1 day', rating:4.8, price:699, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
-  { id:'v12', name:'Rose Incense Sticks', tags:['Incense','Premium'], eta:'5-10 min', rating:4.7, price:85, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
-  { id:'v13', name:'Tulsi Mala (108 Beads)', tags:['Accessories','Spiritual'], eta:'15-20 min', rating:4.9, price:250, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
-  { id:'v14', name:'Silver Diya Set (3pc)', tags:['Diya','Silver','Premium'], eta:'1-2 days', rating:4.9, price:1299, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
-  { id:'v15', name:'Lotus Candles (Pack of 6)', tags:['Candles','Decorative'], eta:'10-15 min', rating:4.5, price:180, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
-  { id:'v16', name:'Dhoop Sticks (Guggul)', tags:['Incense','Traditional'], eta:'5-10 min', rating:4.6, price:95, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
-  { id:'v17', name:'Rudraksha Bracelet', tags:['Accessories','Spiritual'], eta:'10-15 min', rating:4.8, price:450, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
-  { id:'v18', name:'Kalash (Copper)', tags:['Essentials','Copper'], eta:'1-2 days', rating:4.7, price:850, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
-  { id:'v19', name:'Fresh Jasmine Garland', tags:['Flowers','Fresh'], eta:'30-40 min', rating:4.6, price:120, img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
-  { id:'v20', name:'Pooja Kit (Complete)', tags:['Combo','Essentials'], eta:'5-10 min', rating:4.8, price:399, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
-  { id:'v21', name:'Brass Kalash (Small)', tags:['Brass','Essentials'], eta:'20-30 min', rating:4.5, price:550, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
-  { id:'v22', name:'Mogra Incense Cones', tags:['Incense','Fragrant'], eta:'5-10 min', rating:4.7, price:70, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
-  { id:'v23', name:'Panchamrit Set', tags:['Offerings','Essentials'], eta:'10-15 min', rating:4.4, price:150, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
-  { id:'v24', name:'Aarti Thali (Decorated)', tags:['Plate','Decorative'], eta:'1-2 days', rating:4.8, price:699, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
-  { id:'v25', name:'Cotton Wicks (100pcs)', tags:['Essentials'], eta:'5-10 min', rating:4.3, price:35, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
-  { id:'v26', name:'Nag Champa Incense', tags:['Incense','Premium'], eta:'5-10 min', rating:4.9, price:110, img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
-  { id:'v27', name:'Hanuman Chalisa Book', tags:['Books','Spiritual'], eta:'1-2 days', rating:4.6, price:80, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
-  { id:'v28', name:'Lakshmi Diya Stand', tags:['Diya','Decorative'], eta:'20-30 min', rating:4.7, price:380, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
-  { id:'v29', name:'Vibhuti (Sacred Ash)', tags:['Essentials','Traditional'], eta:'5-10 min', rating:4.5, price:45, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
-  { id:'v30', name:'Diwali Special Combo', tags:['Combo','Festival','Premium'], eta:'1 day', rating:4.9, price:1499, img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop' },
+  { id:'v1', name:'Brass Diya — Small', tags:['Diya','Brass'], eta:'11 MINS', rating:4.8, price:150, oldPrice:200, discount:'25% OFF', img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
+  { id:'v2', name:'Agarbatti Pack (50)', tags:['Incense'], eta:'11 MINS', rating:4.6, price:60, oldPrice:90, discount:'33% OFF', img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=800&auto=format&fit=crop' },
+  { id:'v3', name:'Kumkum & Haldi Set', tags:['Essentials'], eta:'11 MINS', rating:4.7, price:40, img:'https://images.unsplash.com/photo-1541661538399-7f4e9b0f5f5e?q=80&w=800&auto=format&fit=crop' },
+  { id:'v4', name:'Fresh Marigold Garland', tags:['Flowers'], eta:'11 MINS', rating:4.5, price:80, oldPrice:100, discount:'20% OFF', img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=800&auto=format&fit=crop' },
+  { id:'v5', name:'Camphor Box', tags:['Camphor'], eta:'11 MINS', rating:4.6, price:25, img:'https://images.unsplash.com/photo-1593005513054-c6a5a6f4a9e7?q=80&w=800&auto=format&fit=crop' },
+  { id:'v6', name:'Sandalwood Paste', tags:['Chandan'], eta:'11 MINS', rating:4.9, price:120, img:'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?q=80&w=800&auto=format&fit=crop' },
+  { id:'v7', name:'Brass Thali Medium', tags:['Plate','Brass'], eta:'11 MINS', rating:4.4, price:450, img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=800&auto=format&fit=crop' },
+  { id:'v8', name:'Pooja Coconut Fresh', tags:['Offerings'], eta:'11 MINS', rating:4.3, price:60, img:'https://images.unsplash.com/photo-1509223197845-458d87318791?q=80&w=800&auto=format&fit=crop' },
+  { id:'v9', name:'Nandini Pasteurised Toned Milk', tags:['Offerings'], eta:'11 MINS', rating:4.5, price:24, size:'500 ml', img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=800&auto=format&fit=crop' },
+  { id:'v10', name:'Fresh White Eggs (6 pcs)', tags:['Offerings'], eta:'11 MINS', rating:4.6, price:55, oldPrice:75, size:'6 pieces', img:'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=800&auto=format&fit=crop' },
+  { id:'v11', name:'Pepsi Zero Sugar', tags:['Beverages'], eta:'11 MINS', rating:4.2, price:20, size:'400 ml', img:'https://images.unsplash.com/photo-1554866585-cd94860890b7?q=80&w=800&auto=format&fit=crop' },
+  { id:'v12', name:'Rose Incense Sticks', tags:['Incense','Premium'], eta:'20-30 min', rating:4.7, price:85, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
+  { id:'v13', name:'Tulsi Mala 108 Beads', tags:['Accessories'], eta:'1-2 days', rating:4.9, price:250, img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=800&auto=format&fit=crop' },
+  { id:'v14', name:'Silver Diya Set 3pc', tags:['Diya','Premium'], eta:'1-2 days', rating:4.9, price:1299, img:'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=800&auto=format&fit=crop' },
+  { id:'v15', name:'Lotus Candles Pack of 6', tags:['Candles'], eta:'20-30 min', rating:4.5, price:180, img:'https://images.unsplash.com/photo-1602881914519-e3ef0871e18e?q=80&w=800&auto=format&fit=crop' },
 ];
 
-const categories = Array.from(new Set(DATA.flatMap(d=>d.tags))).sort();
-categories.unshift('All');
-
-const categoriesEl = document.getElementById('categories');
-categories.forEach(cat=>{
-  const chip = document.createElement('div');
-  chip.className = 'chip' + (cat==='All' ? ' active' : '');
-  chip.textContent = cat;
-  chip.dataset.cat = cat;
-  chip.addEventListener('click', ()=> {
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-    chip.classList.add('active');
-    filterAndRender();
-  });
-  categoriesEl.appendChild(chip);
-});
-
-const listing = document.getElementById('listing');
-
-function createVendorCard(item){
-  const el = document.createElement('div');
-  el.className = 'vendor';
-  const tagsHtml = item.tags.map(t=>`<span class="tag-item">${t}</span>`).join('');
-  el.innerHTML = `
-    <div class="thumb">
-      <img src="${item.img}" alt="${item.name}">
-      <div class="quick-badge">${item.eta}</div>
-    </div>
-    <div class="meta">
-      <h3>${item.name}</h3>
-      <div class="tags">${tagsHtml}</div>
-      <div class="info">
-        <div class="rating">⭐ ${item.rating}</div>
-        <div class="price-badge">${formatPrice(item.price)}</div>
-      </div>
-      <div class="cta">
-        <button class="btn-add" data-id="${item.id}">Add to Cart</button>
-        <button class="btn-view" data-view="${item.id}">👁️</button>
-      </div>
-    </div>
-  `;
-  return el;
-}
-
-function formatPrice(n){ return '₹ ' + n; }
-
-function renderListing(items){
-  listing.innerHTML = '';
-  if(!items.length){
-    listing.innerHTML = '<div class="center muted" style="grid-column:1/-1;padding:60px 20px">No results found</div>';
-    return;
-  }
-  items.forEach(it => listing.appendChild(createVendorCard(it)));
-}
-
-const searchInput = document.getElementById('search-input');
-const sortSelect = document.getElementById('sort');
-
-function filterAndRender(){
-  const q = searchInput.value.trim().toLowerCase();
-  const activeChip = document.querySelector('.chip.active').dataset.cat;
-  let filtered = DATA.filter(d=>{
-    const inCat = activeChip === 'All' ? true : d.tags.includes(activeChip);
-    const inQ = q ? (d.name.toLowerCase().includes(q) || d.tags.join(' ').toLowerCase().includes(q)) : true;
-    return inCat && inQ;
-  });
-
-  const sort = sortSelect.value;
-  if(sort === 'price_low') filtered.sort((a,b)=>a.price-b.price);
-  else if(sort === 'price_high') filtered.sort((a,b)=>b.price-a.price);
-  else filtered.sort((a,b)=>b.rating - a.rating);
-
-  renderListing(filtered);
-}
-
-searchInput.addEventListener('input', debounce(filterAndRender, 180));
-sortSelect.addEventListener('change', filterAndRender);
-
-renderListing(DATA);
+const spotlightCategories = [
+  { name:'Festival Essentials', desc:'Get ready for festivals', badge:'CLEARANCE SALE', type:'clearance', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400' },
+  { name:'Brass & Copper', desc:'Traditional items', badge:'FEATURED', type:'featured', img:'https://images.unsplash.com/photo-1558980664-10d16b1b6c5f?q=80&w=400' },
+  { name:'Premium Incense', desc:"Let's Try", badge:'BRAND IN FOCUS', type:'focus', img:'https://images.unsplash.com/photo-1574680096145-94454d4b6f4c?q=80&w=400' },
+  { name:'Fresh Flowers', desc:'Daily pooja needs', badge:'CLEARANCE SALE', type:'clearance', img:'https://images.unsplash.com/photo-1505577058444-a3dabf54f4f0?q=80&w=400' },
+  { name:'Spiritual Items', desc:'For your devotion', badge:'FEATURED', type:'featured', img:'https://images.unsplash.com/photo-1589710758294-76f6d17a1f89?q=80&w=400' },
+  { name:'Combo Packs', desc:'Save more', badge:'BRAND IN FOCUS', type:'focus', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400' },
+];
 
 let cart = [];
 
+// ---------- Helpers ----------
+function formatPrice(n){ return '₹' + n; }
 function showToast(msg){
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 2000);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 2000);
+}
+function persistCart(){ localStorage.setItem('pooja_cart_v1', JSON.stringify(cart)); updateCartUI(); }
+function loadCart(){ cart = JSON.parse(localStorage.getItem('pooja_cart_v1') || '[]'); updateCartUI(); }
+
+// ---------- Render Quick Picks ----------
+function renderQuickPicks(){
+  const container = document.getElementById('quickPicks');
+  container.innerHTML = '';
+  const featured = DATA.slice(0, 8);
+  featured.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'quick-item';
+    el.innerHTML = `
+      ${item.discount ? `<div class="discount-badge">${item.discount}</div>` : ''}
+      <img src="${item.img}" alt="${item.name}">
+      <div class="duration">${item.eta}</div>
+      <h3>${item.name}</h3>
+      ${item.size ? `<div class="size">${item.size}</div>` : ''}
+      <div class="price-row">
+        <span class="price">${formatPrice(item.price)}</span>
+        ${item.oldPrice ? `<span class="old-price"> ${formatPrice(item.oldPrice)}</span>` : ''}
+      </div>
+      <button class="add-btn" onclick="addToCart('${item.id}')">+</button>
+    `;
+    container.appendChild(el);
+  });
 }
 
+// ---------- Render Spotlight ----------
+function renderSpotlight(){
+  const container = document.getElementById('spotlight');
+  container.innerHTML = '';
+  spotlightCategories.forEach(cat => {
+    const el = document.createElement('div');
+    el.className = 'spotlight-card';
+    el.innerHTML = `
+      <div class="badge ${cat.type === 'clearance' ? 'clearance' : cat.type === 'featured' ? 'featured' : 'focus'}">${cat.badge}</div>
+      <img src="${cat.img}" alt="${cat.name}">
+      <h3>${cat.name}</h3>
+      <p>${cat.desc}</p>
+    `;
+    el.addEventListener('click', ()=> {
+      // simple action: scroll to browse section
+      document.getElementById('browseSection').scrollIntoView({behavior:'smooth', block:'center'});
+    });
+    container.appendChild(el);
+  });
+}
+
+// ---------- Render Listing (Browse All) ----------
+function renderListing(filter = null){
+  const wrap = document.getElementById('listing');
+  wrap.innerHTML = '';
+  const items = filter ? DATA.filter(filter) : DATA;
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${item.img}" alt="${item.name}">
+      <div class="eta">${item.eta}</div>
+      <h3>${item.name}</h3>
+      <div class="tags">${item.tags.join(' • ')}</div>
+      <div class="bottom">
+        <div>
+          <div class="price">${formatPrice(item.price)}</div>
+          <div class="rating">⭐ ${item.rating}</div>
+        </div>
+        <button class="add-btn" onclick="addToCart('${item.id}')">+</button>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+// ---------- Cart UI ----------
 function updateCartUI(){
-  const cartItemsEl = document.getElementById('cartItems');
-  cartItemsEl.innerHTML = '';
-  
-  if(cart.length === 0){
-    cartItemsEl.innerHTML = `
-      <div class="center muted empty-state">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-        <div>No items yet</div>
-        <div class="small">Add from the list</div>
-      </div>`;
+  const count = cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCountFloat').textContent = count;
+  const total = cart.reduce((s,i)=>{
+    const it = DATA.find(d=>d.id===i.id);
+    return s + (it ? it.price * i.qty : 0);
+  },0);
+  document.getElementById('cartTotal').textContent = formatPrice(total);
+}
+
+function addToCart(id, qty = 1){
+  const existing = cart.find(c=>c.id===id);
+  if(existing) existing.qty += qty;
+  else cart.push({ id, qty });
+  persistCart();
+  showToast('Added to cart');
+}
+
+// ---------- Cart modal / interactions ----------
+function openCart(){
+  renderCartModal();
+  document.getElementById('cartModal').classList.add('show');
+}
+function closeCart(ev){
+  if(ev) {
+    // close if background clicked or close btn pressed
+    if(ev.target && ev.target.id === 'cartModal') document.getElementById('cartModal').classList.remove('show');
+    else if(ev === true) document.getElementById('cartModal').classList.remove('show');
+    else if(!ev.target) document.getElementById('cartModal').classList.remove('show');
   } else {
-    cart.forEach(entry=>{
-      const item = DATA.find(d=>d.id === entry.id);
-      const row = document.createElement('div');
-      row.className = 'cart-row';
-      row.innerHTML = `
-        <div class="left">
-          <img src="${item.img}" alt="${item.name}">
-          <div>
-            <div style="font-weight:700;font-size:14px">${item.name}</div>
-            <div class="qty-control">
-              <button class="qty-btn"
+    document.getElementById('cartModal').classList.remove('show');
+  }
+}
+
+function renderCartModal(){
+  const holder = document.getElementById('cartItems');
+  holder.innerHTML = '';
+  if(cart.length === 0){
+    holder.innerHTML = '<div style="text-align:center;color:#666">Your cart is empty.</div>';
+    updateCartUI();
+    return;
+  }
+  cart.forEach(entry => {
+    const it = DATA.find(d=>d.id === entry.id);
+    const row = document.createElement('div');
+    row.className = 'cart-row';
+    row.innerHTML = `
+      <img src="${it.img}" alt="${it.name}">
+      <div class="cart-row-info">
+        <h4>${it.name}</h4>
+        <div>Price: ${formatPrice(it.price)}</div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty('${entry.id}', -1)">-</button>
+          <div>${entry.qty}</div>
+          <button class="qty-btn" onclick="changeQty('${entry.id}', 1)">+</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-weight:700">${formatPrice(it.price * entry.qty)}</div>
+        <button style="padding:6px;border-radius:8px;border:none;background:#fff;cursor:pointer" onclick="removeFromCart('${entry.id}')">Remove</button>
+      </div>
+    `;
+    holder.appendChild(row);
+  });
+  updateCartUI();
+}
+
+function changeQty(id, delta){
+  const idx = cart.findIndex(c=>c.id===id);
+  if(idx === -1) return;
+  cart[idx].qty += delta;
+  if(cart[idx].qty <= 0) cart.splice(idx,1);
+  persistCart();
+  renderCartModal();
+}
+function removeFromCart(id){
+  cart = cart.filter(c=>c.id !== id);
+  persistCart();
+  renderCartModal();
+}
+
+// ---------- Checkout (demo save to localStorage) ----------
+function checkout(){
+  if(cart.length === 0){ showToast('Cart is empty'); return; }
+  const orders = JSON.parse(localStorage.getItem('pooja_orders_v1') || '[]');
+  orders.push({ ts: new Date().toISOString(), items: cart });
+  localStorage.setItem('pooja_orders_v1', JSON.stringify(orders));
+  cart = [];
+  persistCart();
+  renderCartModal();
+  showToast('Order saved locally (demo)');
+  setTimeout(()=> closeCart(true), 800);
+}
+
+// ---------- Search ----------
+document.getElementById('search-input').addEventListener('input', debounce(function(e){
+  const q = e.target.value.trim().toLowerCase();
+  if(!q) renderListing();
+  else renderListing(item => item.name.toLowerCase().includes(q) || item.tags.join(' ').toLowerCase().includes(q));
+}, 220));
+
+// ---------- Utility ----------
+function debounce(fn, ms=200){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+
+// ---------- UI helpers ----------
+function scrollToAll(){
+  document.getElementById('browseSection').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ---------- Init ----------
+window.addEventListener('load', ()=>{
+  renderQuickPicks();
+  renderSpotlight();
+  renderListing();
+  loadCart();
+});
+</script>
+
+</body>
+</html>
